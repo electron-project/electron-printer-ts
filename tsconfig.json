@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "incremental": true,
+    "target": "es2021",
+    "module": "commonjs",
+    "lib": ["dom", "es2021"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": ".erb/dll",
+    "plugins": [
+      // 转换输出 js 文件中的路径
+      {
+        "transform": "typescript-transform-paths",
+        "exclude": ["**/node_modules/**"]
+      },
+      // 转换输出 .d.ts 文件中的路径
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true,
+        "exclude": ["**/node_modules/**"]
+      }
+    ]
+  },
+  "ts-node": {
+    "files": true,
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["src/**/*", "assets/**/*", "src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
+}
