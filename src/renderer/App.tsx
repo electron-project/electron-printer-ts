@@ -1,40 +1,27 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
+import './App.scss';
 
 const Hello = () => {
+  window.electron.ipcRenderer.getPrinterList('ipc-printer-getList');
+
+  window.electron.ipcRenderer.once('ipc-printer-getList', (printList) => {
+    console.log(printList);
+
+    // 执行渲染
+    // document.getElementById('bd').innerHTML = info.html;
+    // ipcRenderer.sendToHost('webview-print-do')
+  });
+
   return (
     <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+      <webview
+        id="printWebview"
+        src="fullPath"
+        style={{ width: '80mm', visibility: 'hidden' }}
+        // 用于打印的属性
+        nodeintegration // 是为了让webview访问的页面具有Node集成, 并且可以使用像 require 和 process 这样的node APIs 去访问低层系统资源
+        webpreferences="contextIsolation=no" // 也是同样的目的，为了在index.html中使用require。
+      ></webview>
     </div>
   );
 };

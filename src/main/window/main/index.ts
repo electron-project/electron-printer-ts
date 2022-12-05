@@ -11,6 +11,7 @@ import createMenu from '@/main/window/main/menu';
 import initElectronRemote from '@/main/window/main/electron-remote';
 import { regGlobalShortcut } from '@/main/window/main/global-shortcut';
 import '@/main/ipc/accept/example';
+import initPrintIpcMain from '@/main/ipc/accept/print';
 import * as process from 'process';
 
 const createWindow = async () => {
@@ -45,6 +46,7 @@ const createWindow = async () => {
   initEvent(mainWindow);
   await initElectronRemote(mainWindow);
 
+  initPrintIpcMain(mainWindow);
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();

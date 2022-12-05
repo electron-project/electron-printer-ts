@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import createWindow from '@/main/window/main';
+import '@/main/window/app/url-scheme';
 
 // 当Electron完成时，该方法将被调用
 // 初始化并准备创建浏览器窗口。
@@ -13,9 +14,8 @@ app
 
 // 在macOS上，在应用程序中重新创建一个窗口是常见的
 // 单击dock图标，没有打开其他窗口。
-app.on('activate', () => {
-  // if (mainWindow === null)
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+app.on('activate', async () => {
+  if (BrowserWindow.getAllWindows().length === 0) await createWindow();
 });
 
 // window 平台窗口关闭时候，

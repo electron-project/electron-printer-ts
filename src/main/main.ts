@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import { isDebug } from '@/constant/env';
-import '@/main/window/app';
+import '@/main/window/app/app';
 import '@/main/ipc/accept/example';
 
 if (process.env.NODE_ENV === 'production') {

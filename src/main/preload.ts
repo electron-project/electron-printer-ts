@@ -1,13 +1,10 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { Channels, PrinterChannels } from '@/type/channel';
 
-export type Channels = 'ipc-example';
-
+// 需要在这里定义暴露给 ipcRender 的函数，然后在 ipcRender 的 preload.d.ts 中定义类型
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
-    sendMessage(channel: Channels, args: unknown[]) {
-      ipcRenderer.send(channel, args);
-    },
-    on(channel: Channels, func: (...args: unknown[]) => void) {
+    on(channel: string, func: (...args: unknown[]) => void) {
       const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
         func(...args);
       ipcRenderer.on(channel, subscription);
@@ -16,8 +13,16 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.removeListener(channel, subscription);
       };
     },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
+    once(channel: string, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
+    },
+
+    sendMessage(channel: Channels, args: unknown[]) {
+      ipcRenderer.send(channel, args);
+    },
+
+    getPrinterList(channel: PrinterChannels) {
+      ipcRenderer.send(channel);
     },
   },
 });
