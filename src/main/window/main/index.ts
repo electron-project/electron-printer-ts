@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import { isDebug } from '@/constant/env';
 import installExtensions from '@/main/config/plugin/dev-tools';
@@ -10,8 +10,8 @@ import initTray from '@/main/window/main/tray';
 import createMenu from '@/main/window/main/menu';
 import initElectronRemote from '@/main/window/main/electron-remote';
 import { regGlobalShortcut } from '@/main/window/main/global-shortcut';
-import '@/main/ipc/accept/example';
-import initPrintIpcMain from '@/main/ipc/accept/print';
+import '@/main/ipc/example';
+import initPrintIpcMain from '@/main/ipc/print';
 import * as process from 'process';
 
 const createWindow = async () => {

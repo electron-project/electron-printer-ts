@@ -10,7 +10,7 @@
  */
 import { isDebug } from '@/constant/env';
 import '@/main/window/app/app';
-import '@/main/ipc/accept/example';
+import '@/main/ipc/example';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

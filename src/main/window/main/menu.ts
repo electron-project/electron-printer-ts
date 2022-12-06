@@ -1,10 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  Menu,
-  MenuItemConstructorOptions,
-  shell,
-} from 'electron';
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from 'electron';
 import { isDebug } from '@/constant/env';
 import CurrentPlatform from '@/constant/platform';
 

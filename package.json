@@ -50,7 +50,6 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "cross-env NODE_ENV=development eslint --cache"
     ],
     "*.json,.{eslintrc,prettierrc}": [
       "prettier --ignore-path .eslintignore --parser json --write"
@@ -63,20 +62,7 @@
     ]
   },
   "browserslist": [],
-  "prettier": {
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": [
-          ".prettierrc",
-          ".eslintrc"
-        ],
-        "options": {
-          "parser": "json"
-        }
-      }
-    ]
-  },
+
   "jest": {
     "moduleDirectories": [
       "node_modules",
