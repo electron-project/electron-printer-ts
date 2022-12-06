@@ -47,9 +47,8 @@
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
-    "test1": "D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\node_modules\\electron\\dist\\electron.exe -r D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\node_modules\\ts-node\\register\\transpile-only -r D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\test\\loadconfig.js   D:\\soft-dev\\code\\web\\frame\\React\\electron-printer",
-    "test2": "D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\node_modules\\electron\\dist\\electron.exe -r D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\node_modules\\ts-node\\register\\transpile-only  -r  D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\node_modules\\tsconfig-paths\\register  D:\\soft-dev\\code\\web\\frame\\React\\electron-printer",
-    "test3": ".\\electron-printer\\node_modules\\electron\\dist\\electron.exe -r .\\electron-printer\\load.js   .\\electron-printer\n"
+    "test3": "cd .. && .\\electron-printer\\node_modules\\electron\\dist\\electron.exe -r .\\electron-printer\\node_modules\\ts-node\\register  .\\electron-printer",
+    "test4": "cd assets && ..\\node_modules\\electron\\dist\\electron.exe -r ..\\node_modules\\ts-node\\register  ..\\"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

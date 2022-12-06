@@ -22,9 +22,9 @@
     "require": ["tsconfig-paths/register"], // ts-node -r
     "transpileOnly": true, // 不编译类型
     "pretty": true, // 漂亮的格式化输出
-    // 如果 tsconfig 源文件写了则以源文件为主
-    "compilerOptions": {
-    }
+    "files": true,
+    "scopeDir": ""
+    // compilerOptions 如果 tsconfig 源文件写了则以源文件为主
   },
   "include": ["src/**/*", "assets/**/*", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]

@@ -1,5 +1,6 @@
-// https://cloud.tencent.com/developer/article/1781419
-// https://www.electronjs.org/zh/docs/latest/tutorial/launch-app-from-url-in-another-app#windows-%E4%B8%8B%E4%BB%A3%E7%A0%81
+// 教程：https://cloud.tencent.com/developer/article/1781419
+// 教程：http://www.flyknows.com/2020/08/13/deeplink%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8/
+// 文档：https://www.electronjs.org/zh/docs/latest/tutorial/launch-app-from-url-in-another-app#windows-%E4%B8%8B%E4%BB%A3%E7%A0%81
 
 import { app, ipcMain, shell } from 'electron';
 import { PROTOCOL } from '@/constant/url-scheme';
