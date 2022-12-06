@@ -18,7 +18,7 @@ if (process.defaultApp && !app.isPackaged && process.argv.length >= 2) {
     // 魔改的就是启动这个 electron main 进程的命令
 
     "-r",
-    path.resolve(process.cwd(),'node_modules','ts-node/register'),
+    path.resolve(process.cwd(),'script/deep-link-dev'),
     path.resolve(process.cwd()),
   ]);
 } else {
