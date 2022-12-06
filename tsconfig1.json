@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./*"]
     },
@@ -16,15 +16,24 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": ".erb/dll"
+    "outDir": ".erb/dll",
+    "plugins": [
+      // 转换输出 js 文件中的路径
+      {
+        "transform": "typescript-transform-paths",
+        "exclude": ["**/node_modules/**"]
+      },
+      // 转换输出 .d.ts 文件中的路径
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true,
+        "exclude": ["**/node_modules/**"]
+      }
+    ]
   },
   "ts-node": {
-    "require": ["tsconfig-paths/register"], // ts-node -r
-    "transpileOnly": true, // 不编译类型
-    "pretty": true, // 漂亮的格式化输出
-    // 如果 tsconfig 源文件写了则以源文件为主
-    "compilerOptions": {
-    }
+    "files": true,
+    "require": ["tsconfig-paths/register"]
   },
   "include": ["src/**/*", "assets/**/*", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]

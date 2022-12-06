@@ -4,6 +4,7 @@
 import { app, ipcMain, shell } from 'electron';
 import { PROTOCOL } from '@/constant/url-scheme';
 import path from 'path';
+import * as process from 'process';
 
 // process.defaultApp 当应用程序启动时被作为参数传递给默认应用，这个属性在主进程中是 true，否则是undefined
 if (process.defaultApp && !app.isPackaged && process.argv.length >= 2) {
@@ -12,9 +13,12 @@ if (process.defaultApp && !app.isPackaged && process.argv.length >= 2) {
   // 后边两个参数是 windows 特有
   app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, [
     // 在开发阶段，我们是通过 electron . 或者 electron path/to/script.js 来启动的应用，
-    // 所以 process.argv[1] 是我们的脚本路径，传给系统时，这个参数也不能少，
-    // 否则启动的就是一个纯粹的 Electron 壳，而不是我们的应用了
-    path.resolve(process.argv[1]),
+    // 所以 正常 electron 版本(非魔改)的 process.argv[1] 是我们的脚本路径，传给系统时，这个参数也不能少
+    // 魔改的就是启动这个 electron main 进程的命令
+
+    "-r",
+    path.resolve(process.cwd(),'node_modules','ts-node/register'),
+    path.resolve(process.cwd()),
   ]);
 } else {
   app.setAsDefaultProtocolClient(PROTOCOL);

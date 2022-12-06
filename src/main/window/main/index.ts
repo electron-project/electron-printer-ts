@@ -24,6 +24,7 @@ const createWindow = async () => {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(process.cwd(), '.erb/dll/preload.js'),
+      webgl:true
     },
   });
 
@@ -32,6 +33,7 @@ const createWindow = async () => {
   // 是因为安装开发者工具 没有外网
   // 必须在 loadURL 之前进行安装
   if (isDebug) await installExtensions();
+
 
   // 设置为最顶层
   // win.setAlwaysOnTop(true)
