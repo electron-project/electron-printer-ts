@@ -2,6 +2,7 @@
 // 教程：http://www.flyknows.com/2020/08/13/deeplink%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8/
 // 教程：https://juejin.cn/post/6887845625447055367
 // 文档：https://www.electronjs.org/zh/docs/latest/tutorial/launch-app-from-url-in-another-app#windows-%E4%B8%8B%E4%BB%A3%E7%A0%81
+// Nsis 钩子详细说明：https://www.electron.build/configuration/nsis
 
 import { app } from 'electron'
 import { PROTOCOL } from '@/constant/url-scheme'
