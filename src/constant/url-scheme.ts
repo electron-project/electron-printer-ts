@@ -1,1 +1,1 @@
-export const PROTOCOL = 'printApp';
+export const PROTOCOL = 'printapp';

@@ -1,9 +1,9 @@
-const { platform } = process;
+const { platform } = process
 
-const CurrentPlatform = {
+const Platform = {
   isMac: platform === 'darwin',
   isWindows: platform === 'win32',
   isLinux: platform === 'linux',
-};
+}
 
-export default CurrentPlatform;
+export default Platform

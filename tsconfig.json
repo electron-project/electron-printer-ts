@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": ".erb/dll"
+    "outDir": ".erb/dll",
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"], // ts-node -r
@@ -26,6 +26,6 @@
     "scopeDir": ""
     // compilerOptions 如果 tsconfig 源文件写了则以源文件为主
   },
-  "include": ["src/**/*", "assets/**/*", "src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*", "assets/**/*", "src/**/*.ts", "src/**/*.tsx","src/typings/*.d.ts"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
 }
