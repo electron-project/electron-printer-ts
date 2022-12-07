@@ -1,4 +1,7 @@
-const Hello = () => {
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+
+const Home = () => {
   window.electron.ipcRenderer.getPrinterList('ipc-printer-getList')
 
   window.electron.ipcRenderer.once('ipc-printer-getList', (printList) => {
@@ -11,6 +14,8 @@ const Hello = () => {
 
   return (
     <div>
+      <Outlet />
+      111
       <webview
         id="printWebview"
         src="fullPath"
@@ -23,4 +28,4 @@ const Hello = () => {
   )
 }
 
-export default Hello
+export default Home

@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
-import { isDebug } from '@/constant/env'
-import installExtensions from '@/main/utils/plugin/dev-tools'
+import { isDev } from '@/constant/env'
+import installExtensions from '@/main/utils/plugin/extensions'
 import AppUpdater from '@/main/utils/plugin/auto-update'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { iconPath } from '@/constant/icon'
@@ -32,7 +32,7 @@ const createWindow = async () => {
   // Failed to fetch extension, trying 4 more times
   // 是因为安装开发者工具 没有外网
   // 必须在 loadURL 之前进行安装
-  // if (isDebug) await installExtensions();
+  // if (isDev) await installExtensions();
 
   initTray(mainWindow)
   createMenu(mainWindow)
@@ -44,7 +44,7 @@ const createWindow = async () => {
   initPrintIpcMain(mainWindow)
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater()
+  AppUpdater().then()
 
   // 设置为最顶层
   // win.setAlwaysOnTop(true)

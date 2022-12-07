@@ -8,15 +8,15 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { isDebug } from '@/constant/env';
-import '@/main/window/app/app';
-import '@/main/ipc/example';
+import { isDev } from '@/constant/env'
+import '@/main/window/app/app'
+import '@/main/ipc/example'
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
+  const sourceMapSupport = require('source-map-support')
+  sourceMapSupport.install()
 }
 
-if (isDebug) {
-  require('electron-debug')();
+if (isDev) {
+  require('electron-debug')()
 }

@@ -1,12 +1,12 @@
-import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from 'electron';
-import { isDebug } from '@/constant/env';
-import CurrentPlatform from '@/constant/platform';
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from 'electron'
+import { isDev } from '@/constant/env'
+import CurrentPlatform from '@/constant/platform'
 
-let win: BrowserWindow;
+let win: BrowserWindow
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
-  selector?: string;
-  submenu?: DarwinMenuItemConstructorOptions[] | Menu;
+  selector?: string
+  submenu?: DarwinMenuItemConstructorOptions[] | Menu
 }
 
 function buildDarwinTemplate(): MenuItemConstructorOptions[] {
@@ -37,11 +37,11 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         label: '退出',
         accelerator: 'Command+Q',
         click: () => {
-          app.quit();
+          app.quit()
         },
       },
     ],
-  };
+  }
   const subMenuEdit: DarwinMenuItemConstructorOptions = {
     label: '编辑',
     submenu: [
@@ -57,7 +57,7 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         selector: 'selectAll:',
       },
     ],
-  };
+  }
   const subMenuViewDev: MenuItemConstructorOptions = {
     label: '视图',
     submenu: [
@@ -65,25 +65,25 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         label: '刷新',
         accelerator: 'Command+R',
         click: () => {
-          win.webContents.reload();
+          win.webContents.reload()
         },
       },
       {
         label: '切换全屏',
         accelerator: 'Ctrl+Command+F',
         click: () => {
-          win.setFullScreen(!win.isFullScreen());
+          win.setFullScreen(!win.isFullScreen())
         },
       },
       {
         label: '切换开发者工具',
         accelerator: 'Alt+Command+I',
         click: () => {
-          win.webContents.toggleDevTools();
+          win.webContents.toggleDevTools()
         },
       },
     ],
-  };
+  }
   const subMenuViewProd: MenuItemConstructorOptions = {
     label: '视图',
     submenu: [
@@ -91,11 +91,11 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         label: '切换全屏',
         accelerator: 'Ctrl+Command+F',
         click: () => {
-          win.setFullScreen(!win.isFullScreen());
+          win.setFullScreen(!win.isFullScreen())
         },
       },
     ],
-  };
+  }
   const subMenuWindow: DarwinMenuItemConstructorOptions = {
     label: '窗口',
     submenu: [
@@ -108,45 +108,41 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
       { type: 'separator' },
       { label: 'Bring All to Front', selector: 'arrangeInFront:' },
     ],
-  };
+  }
   const subMenuHelp: MenuItemConstructorOptions = {
     label: '帮助',
     submenu: [
       {
         label: '学习更多',
         click() {
-          shell.openExternal('https://electronjs.org');
+          shell.openExternal('https://electronjs.org')
         },
       },
       {
         label: '文档',
         click() {
-          shell.openExternal(
-            'https://github.com/electron/electron/tree/main/docs#readme'
-          );
+          shell.openExternal('https://github.com/electron/electron/tree/main/docs#readme')
         },
       },
       {
         label: '社区讨论',
         click() {
-          shell.openExternal('https://www.electronjs.org/community');
+          shell.openExternal('https://www.electronjs.org/community')
         },
       },
       {
         label: '搜索 Issues',
         click() {
-          shell.openExternal('https://github.com/electron/electron/issues');
+          shell.openExternal('https://github.com/electron/electron/issues')
         },
       },
     ],
-  };
+  }
 
   const subMenuView =
-    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'
-      ? subMenuViewDev
-      : subMenuViewProd;
+    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true' ? subMenuViewDev : subMenuViewProd
 
-  return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+  return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp]
 }
 
 function buildDefaultTemplate() {
@@ -162,27 +158,27 @@ function buildDefaultTemplate() {
           label: '&关闭窗口',
           accelerator: 'Ctrl+W',
           click: () => {
-            win.close();
+            win.close()
           },
         },
       ],
     },
     {
       label: '&开发者工具',
-      submenu: isDebug
+      submenu: isDev
         ? [
             {
               label: '&刷新',
               accelerator: 'Ctrl+R',
               click: () => {
-                win.webContents.reload();
+                win.webContents.reload()
               },
             },
             {
               label: '切换全屏',
               accelerator: 'F11',
               click: () => {
-                win.setFullScreen(!win.isFullScreen());
+                win.setFullScreen(!win.isFullScreen())
               },
             },
             {
@@ -190,8 +186,8 @@ function buildDefaultTemplate() {
               // 添加快捷键
               accelerator: 'CmdOrCtrl + shift + i',
               click: () => {
-                const { webContents } = win;
-                webContents.toggleDevTools();
+                const { webContents } = win
+                webContents.toggleDevTools()
               },
             },
           ]
@@ -200,7 +196,7 @@ function buildDefaultTemplate() {
               label: '切换全屏',
               accelerator: 'F11',
               click: () => {
-                win.setFullScreen(!win.isFullScreen());
+                win.setFullScreen(!win.isFullScreen())
               },
             },
           ],
@@ -211,66 +207,62 @@ function buildDefaultTemplate() {
         {
           label: '学习更多',
           click() {
-            shell.openExternal('https://electronjs.org');
+            shell.openExternal('https://electronjs.org')
           },
         },
         {
           label: 'electron 文档',
           click() {
-            shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme'
-            );
+            shell.openExternal('https://github.com/electron/electron/tree/main/docs#readme')
           },
         },
         {
           label: '交流社区',
           click() {
-            shell.openExternal('https://www.electronjs.org/community');
+            shell.openExternal('https://www.electronjs.org/community')
           },
         },
         {
           label: '搜索 issues',
           click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
+            shell.openExternal('https://github.com/electron/electron/issues')
           },
         },
       ],
     },
-  ];
+  ]
 }
 
 function setupDevelopmentEnvironment(): void {
   win.webContents.on('context-menu', (_, props) => {
-    const { x, y } = props;
+    const { x, y } = props
 
     const popUpTemplate = [
       {
         label: '检查元素',
         click: () => {
-          win.webContents.inspectElement(x, y);
+          win.webContents.inspectElement(x, y)
         },
       },
-    ];
+    ]
 
-    Menu.buildFromTemplate(popUpTemplate).popup({ window: win });
-  });
+    Menu.buildFromTemplate(popUpTemplate).popup({ window: win })
+  })
 }
 
-const template = CurrentPlatform.isMac
-  ? buildDefaultTemplate()
-  : buildDarwinTemplate();
+const template = CurrentPlatform.isMac ? buildDefaultTemplate() : buildDarwinTemplate()
 
 export default function createMenu(windows: BrowserWindow) {
-  win = windows;
+  win = windows
 
-  if (isDebug) {
-    setupDevelopmentEnvironment();
+  if (isDev) {
+    setupDevelopmentEnvironment()
   }
 
   // 从模板中创建菜单
   // https://www.electronjs.org/docs/latest/api/menu-item#menuitemid
-  const myMenu = Menu.buildFromTemplate(template);
+  const myMenu = Menu.buildFromTemplate(template)
 
   // 设置为应用程序菜单
-  Menu.setApplicationMenu(myMenu);
+  Menu.setApplicationMenu(myMenu)
 }
