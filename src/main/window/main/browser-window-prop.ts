@@ -1,8 +1,8 @@
-import { iconPath } from '@/constant/icon';
-import { app } from 'electron';
-import path from 'path';
-import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
-import WebPreferences = Electron.WebPreferences;
+import { assetsPath } from '@/constant/icon'
+import { app } from 'electron'
+import path from 'path'
+import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions
+import WebPreferences = Electron.WebPreferences
 
 const webPreferences: WebPreferences = {
   devTools: true, // 是否可使用开发者工具
@@ -10,9 +10,7 @@ const webPreferences: WebPreferences = {
   nodeIntegration: true, // 默认false
   nodeIntegrationInWorker: false, // 是否在Web工作器中启用了Node集成. 默认值为 false
   // 脚本路径为文件的绝对路径。 在页面运行其他脚本之前预先加载指定的脚本 无论页面是否集成Node, 此脚本都可以访问所有Node API  当 node integration 关闭时, 预加载的脚本将从全局范围重新引入node的全局引用标志
-  preload: app.isPackaged
-    ? path.join(__dirname, 'preload.js')
-    : path.join(process.cwd(), '.erb/dll/preload.js'),
+  preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
   sandbox: false, // 如果设置该参数, 沙箱的渲染器将与窗口关联, 使它与Chromium OS-level 的沙箱兼容, 并禁用 Node. js 引擎。 它与 nodeIntegration 的选项不同，且预加载脚本的 API 也有限制.
   // session:  // 默认 session 设置页面的 session 而不是直接忽略 Session 对象, 也可用 partition 选项来代替，它接受一个 partition 字符串. 同时设置了session 和 partition时, session 的优先级更高. 默认使用默认的 session.
   // partition  // 通过 session 的 partition 字符串来设置界面session. 如果 partition 以 persist:开头, 该页面将使用持续的 session，并在所有页面生效，且使用同一个partition. 如果没有 persist: 前缀, 页面将使用 in-memory session. 通过分配相同的 partition, 多个页可以共享同一会话。 默认使用默认的 session.
@@ -74,7 +72,7 @@ const webPreferences: WebPreferences = {
   // accessibleTitle: // - 仅提供给如屏幕读取器等辅助工具的替代标题字符串
   // enableBlinkFeatures: // string(可选) - 以逗号分隔的需要启用的特性列表，譬如CSSVariables,KeyboardEventKey 在 RuntimeEnabledFeatures.json5文件中查看被支持的所有特性.
   // disableBlinkFeatures  // string (可选) - 以 ,分隔的禁用特性列表, 如 CSSVariables,KeyboardEventKey. 在RuntimeEnabledFeatures.json5 文件中查看被支持的所有特性.
-};
+}
 
 const browserWindowProp: BrowserWindowConstructorOptions = {
   show: true, // 是否启动时展示
@@ -93,7 +91,7 @@ const browserWindowProp: BrowserWindowConstructorOptions = {
   maximizable: true, // 窗口是否可最大化 默认为true Linux上未实现
   closable: true, // 窗口是否可关闭 默认为true Linux上未实现
 
-  icon: iconPath('icon.png'), // 应用运行时的标题栏图标及 Windows 任务栏图标,默认使用可执行文件的图标.
+  icon: assetsPath('icon.png'), // 应用运行时的标题栏图标及 Windows 任务栏图标,默认使用可执行文件的图标.
   alwaysOnTop: false, // 窗口是否永远在别的窗口的上面。 默认值为 false.
   center: true, // 是否居中
   // x:0, 相对于屏幕左侧偏移量
@@ -146,6 +144,5 @@ const browserWindowProp: BrowserWindowConstructorOptions = {
   zoomToPageWidth: false, // 控制 macOS 上，当选择性单击工具栏上的绿色stoplight按钮或单击 Window > Zoom menu item时的行为。 如果为 true, 窗口将放大到网页的本身宽度, false 将使其缩放到屏幕的宽度。 这也会影响直接调用 maximize() 时的行为。
 
   webPreferences,
-};
-
-export default browserWindowProp;
+}
+export default browserWindowProp

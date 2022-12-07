@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+    <!--    <script src="./print.js"></script>-->
+    <script>
+      require('./print')
+    </script>
+  </head>
+
+  <body>
+    <div class="title">Box1</div>
+
+    <div id="test">内容1</div>
+
+    <div class="content">
+      <table>
+        <tr>
+          <td width="54%">batchNo:</td>
+          <td width="46%">{{batchNo}}</td>
+        </tr>
+        <tr>
+          <td>P/N:</td>
+          <td>{{pn}}</td>
+        </tr>
+        <tr>
+          <td>specifications:</td>
+          <td>{{specifications}}</td>
+        </tr>
+        <tr>
+          <td>quantity:</td>
+          <td>{{quantity}}</td>
+        </tr>
+        <tr>
+          <td>date of manufacture:</td>
+          <td>{{date}}</td>
+        </tr>
+        <tr>
+          <td>employee number:</td>
+          <td>{{employee}}</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <img id="barCode" />
+            <div style="margin-top: -25px">{{barCode}}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

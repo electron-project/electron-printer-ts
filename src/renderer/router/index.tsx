@@ -1,5 +1,6 @@
 import { useRoutes } from 'react-router-dom'
 import Home from '@/renderer/views/home'
+import Print from '@/renderer/views/print'
 
 const routes = [
   {
@@ -8,7 +9,9 @@ const routes = [
     children: [
       // 子路由需要在其父路由的页面中添加 <Outlet />
       {
-        path: 'camp',
+        index: true,
+        path: 'print',
+        element: <Print />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { Channels, PrinterChannels } from '@/typings/channel'
+import { PrinterChannels } from '@/typings/channel'
 
 declare global {
   interface Window {
@@ -7,7 +7,6 @@ declare global {
         on(channel: string, func: (...args: unknown[]) => void): (() => void) | undefined
         once(channel: string, func: (...args: unknown[]) => void): void
 
-        sendMessage(channel: Channels, args: unknown[]): void
         getPrinterList(channel: PrinterChannels, args?: any): void
       }
     }

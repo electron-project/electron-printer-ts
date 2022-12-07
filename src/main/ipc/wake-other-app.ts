@@ -2,6 +2,7 @@
 import { ipcMain, shell } from 'electron'
 import path from 'path'
 
+// 发送事件：event.reply('ipc-example', '')
 ipcMain.on('shell:open', async () => {
   const pageDirectory = __dirname.replace('app.asar', 'app.asar.unpacked')
   const pagePath = path.join('file://', pageDirectory, 'index.html')

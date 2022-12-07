@@ -1,19 +1,13 @@
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import './css/base.scss'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
 root.render(
-  <BrowserRouter>
+  // BrowserRouter 非 hash 路由
+  <HashRouter>
     <App />
-  </BrowserRouter>
+  </HashRouter>
 )
-
-// calling IPC exposed from preload script
-window.electron.ipcRenderer.once('ipc-example', (arg) => {
-  // eslint-disable-next-line no-console
-  console.log(arg)
-})
-window.electron.ipcRenderer.sendMessage('ipc-example', ['ping'])
