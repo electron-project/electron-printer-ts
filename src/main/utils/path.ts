@@ -1,12 +1,18 @@
-import { URL } from 'url';
-import path from 'path';
+import { URL } from 'url'
+import path from 'path'
 
-export function resolveHtmlPath(htmlFileName: string) {
+export function resolveHtmlPath(htmlFileName: string, hash?: string) {
   if (process.env.NODE_ENV === 'development') {
-    const port = process.env.PORT || 1212;
-    const url = new URL(`http://localhost:${port}`);
-    url.pathname = htmlFileName;
-    return url.href;
+    const port = process.env.PORT || 1212
+    const url = new URL(`http://localhost:${port}`)
+    url.pathname = htmlFileName
+    url.hash = '/' + hash || ''
+    return url.href
   }
-  return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
+
+  // xx.loadFile(path.join(__dirname, '../dist/index.html'), {
+  //   hash: 'xx',
+  // })
+
+  return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}${hash ? `#/${hash}` : ''}`
 }

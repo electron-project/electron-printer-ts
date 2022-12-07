@@ -15,12 +15,8 @@ contextBridge.exposeInMainWorld('electron', {
     once(channel: string, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args))
     },
-
-    getPrinterList(channel: PrinterChannels) {
-      ipcRenderer.send(channel)
-    },
-    sendSetHtml(channel: WebViewSetHtml, arg: object) {
-      ipcRenderer.send(channel, arg)
+    send(channel: string, ...args: unknown[]) {
+      ipcRenderer.send(channel, args)
     },
   },
 })

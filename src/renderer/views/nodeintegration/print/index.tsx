@@ -3,9 +3,11 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import WebviewTag = Electron.WebviewTag
 import PrinterInfo = Electron.PrinterInfo
 import IpcMessageEvent = Electron.IpcMessageEvent
-const ipcRenderer = window.require('electron').ipcRenderer
 
 const Print = () => {
+  // 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
+  const ipcRenderer = window.require('electron').ipcRenderer
+
   const containerClass = `${styles['print']} ${'print' || ''}`
 
   const webviewRef = useRef<WebviewTag | null>(null)

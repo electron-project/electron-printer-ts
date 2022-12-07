@@ -6,8 +6,7 @@ declare global {
       ipcRenderer: {
         on(channel: string, func: (...args: unknown[]) => void): (() => void) | undefined
         once(channel: string, func: (...args: unknown[]) => void): void
-
-        getPrinterList(channel: PrinterChannels, args?: any): void
+        send(channel: string, ...args: unknown[]): void
       }
     }
   }

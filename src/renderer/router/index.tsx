@@ -1,6 +1,8 @@
 import { useRoutes } from 'react-router-dom'
 import Home from '@/renderer/views/home'
-import Print from '@/renderer/views/print'
+import Print from '@/renderer/views/nodeintegration/print'
+import ScreenshotUse from '@/renderer/views/screenshot-use'
+import Screenshot from '@/renderer/views/screenshot'
 
 const routes = [
   {
@@ -12,6 +14,16 @@ const routes = [
         index: true,
         path: 'print',
         element: <Print />,
+      },
+      {
+        index: true,
+        path: 'screenshot-use',
+        element: <ScreenshotUse />,
+      },
+      {
+        index: true,
+        path: 'screenshot',
+        element: <Screenshot />,
       },
     ],
   },
