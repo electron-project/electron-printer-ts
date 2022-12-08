@@ -1,4 +1,10 @@
 .print {
   width: inherit;
   height: inherit;
+
+  .webview{
+    display:flex;
+    width: inherit;
+    height: inherit;
+  }
 }

@@ -11,8 +11,8 @@ import '@/main/ipc/index'
 app
   .whenReady()
   .then(() => {
-    createMainWindow().then()
-    // createPrintWindow().then()
+    // createMainWindow().then()
+    createPrintWindow().then()
   })
   .catch(console.log)
 

@@ -4,52 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>设备管理</title>
     <link rel="stylesheet" href="./index.css" />
-    <!--    <script src="./print.js"></script>-->
-    <script>
-      require('./print')
-    </script>
+    <script src="./print.js"></script>
   </head>
 
   <body>
-    <div class="title">Box1</div>
+    <div id='container'>
+      <div class='left'>
+        <img class='logo' src='./assets/logo.png' alt=''/>
+        <div class='title'>
+          这一行是设备名称一共就这么长如果超过一行就折行显示
+        </div>
 
-    <div id="test">内容1</div>
+        <div class='info-container'>
+          <div class='code'>DTFA05010057</div>
+          <div class='name'>媒体设备</div>
+        </div>
+      </div>
 
-    <div class="content">
-      <table>
-        <tr>
-          <td width="54%">batchNo:</td>
-          <td width="46%">{{batchNo}}</td>
-        </tr>
-        <tr>
-          <td>P/N:</td>
-          <td>{{pn}}</td>
-        </tr>
-        <tr>
-          <td>specifications:</td>
-          <td>{{specifications}}</td>
-        </tr>
-        <tr>
-          <td>quantity:</td>
-          <td>{{quantity}}</td>
-        </tr>
-        <tr>
-          <td>date of manufacture:</td>
-          <td>{{date}}</td>
-        </tr>
-        <tr>
-          <td>employee number:</td>
-          <td>{{employee}}</td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <img id="barCode" />
-            <div style="margin-top: -25px">{{barCode}}</div>
-          </td>
-        </tr>
-      </table>
+
+      <div class='right'>
+        <img id='qrcode' src='' alt=''/>
+      </div>
     </div>
   </body>
 </html>

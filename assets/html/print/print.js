@@ -1,5 +1,13 @@
 window.onload = () => {
   const { ipcRenderer } = require('electron')
+  const qrcode = require('qrcode')
+
+
+  qrcode.toDataURL( 'sample text', {margin:0},function (error,url) {
+   const qr =  document.getElementById('qrcode')
+    qr.setAttribute('src',url)
+    console.log(url);
+  })
 
   // ★★★★★★因为打印机的大小未做调整，搞了好久没搞好，需要到系统里面设置打印机的纸张大小★★★★★★
   //引入ipcRenderer对象

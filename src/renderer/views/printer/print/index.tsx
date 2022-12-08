@@ -90,6 +90,7 @@ const Print = () => {
       {/* 也可以使用 mainWindow.webContents.print 进行打印 */}
       {/* https://www.jianshu.com/p/0de0d17106a9 */}
       <webview
+        className={styles.webview}
         ref={webviewRef}
         id="printWebview"
         // src={'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\assets\\html\\print\\index.html'}

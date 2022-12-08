@@ -4,22 +4,66 @@ body {
   width: 320px;
 }
 
-.title {
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: right;
-  font-size: 22px;
-  font-weight: bold;
+#container {
+  width: 1530px;
+  height: 360px;
+
+  padding: 34px 35px 30px 37px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.content {
-  width: 100%;
-  border: 1px solid #000;
-  margin: 0px;
-  padding: 10px;
+#container .left .logo {
+  width: 300px;
+  height: 45px;
 }
 
-table tr td {
-  line-height: 36px;
+#container .left .title {
+  max-width: 616px;
+
+  margin-top: 36px;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 56px;
+  color: #000000;
+}
+
+#container .left .info-container {
+  margin-top: 47px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 647px;
+}
+
+#container .left .info-container .code {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 56px;
+  color: #000000;
+}
+
+#container .left .info-container .name {
+  width: 179px;
+  height: 52px;
+
+  background: #000000;
+  border-radius: 54px;
+
+  font-weight: 400;
+  font-size: 24px;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 52px;
+}
+
+#container .right{
+  width: 400px;
+  height: 400px;
+
+}
+
+#container .right #qrcode{
+  width: 296px;
+  height: 296px;
+  background-color:green;
 }
