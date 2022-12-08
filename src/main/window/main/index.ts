@@ -10,10 +10,10 @@ import initTray from '@/main/window/main/tray'
 import createMenu from '@/main/window/main/menu'
 import initElectronRemote from '@/main/window/main/electron-remote'
 import { regGlobalShortcut } from '@/main/window/main/global-shortcut'
-import '@/main/window/app/url-scheme'
 import * as process from 'process'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import initPrint from '@/main/ipc/print'
+import '@/main/window/app/url-scheme'
 
 let mainWindow: BrowserWindow | null
 
@@ -61,13 +61,13 @@ export const createMainWindow = async () => {
   mainWindow.show()
 }
 
-export function closeMainWindow(option:{force:boolean,hidden?:boolean} = {force:false}) {
-  if (option.force){
+export function closeMainWindow(option: { force: boolean; hidden?: boolean } = { force: false }) {
+  if (option.force) {
     mainWindow = null
     return
   }
 
-  if (option.hidden){
+  if (option.hidden) {
     mainWindow?.close()
   }
 }

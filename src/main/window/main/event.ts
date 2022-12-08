@@ -1,5 +1,5 @@
 import { shell } from 'electron'
-import { closeMainWindow, getMainWindow } from '@/main/window/main/index';
+import { closeMainWindow, getMainWindow } from '@/main/window/main/index'
 
 export const initEvent = () => {
   let mainWindow = getMainWindow()
@@ -23,6 +23,6 @@ export const initEvent = () => {
   })
 
   mainWindow?.on('closed', () => {
-    closeMainWindow({force: true})
+    closeMainWindow({ force: true })
   })
 }
