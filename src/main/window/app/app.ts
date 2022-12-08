@@ -2,7 +2,6 @@ import { app, BrowserWindow } from 'electron'
 import { createMainWindow } from '@/main/window/main'
 import { createPrintWindow } from '@/main/window/print'
 import Platform from '@/constant/platform'
-import '@/main/ipc/screenshot'
 import '@/main/ipc/index'
 
 // 当Electron完成时，该方法将被调用
@@ -11,8 +10,8 @@ import '@/main/ipc/index'
 app
   .whenReady()
   .then(() => {
-    // createMainWindow().then()
-    createPrintWindow().then()
+    createMainWindow().then()
+    // createPrintWindow().then()
   })
   .catch(console.log)
 
