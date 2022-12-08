@@ -23,6 +23,6 @@ export const initEvent = () => {
   })
 
   mainWindow?.on('closed', () => {
-    closeMainWindow()
+    closeMainWindow({force: true})
   })
 }
