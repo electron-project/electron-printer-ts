@@ -1,8 +1,9 @@
 import styles from './index.module.scss'
 import { useState } from 'react'
 
-const ipcRenderer = window.electron.ipcRenderer
 const ScreenshotUse = ({ className }: any) => {
+  const ipcRenderer = window.electron.ipcRenderer
+
   const containerClass = `${styles['screenshot-use']} ${className || ''}`
   const [previewImage, setPreviewImage] = useState<string>('')
 

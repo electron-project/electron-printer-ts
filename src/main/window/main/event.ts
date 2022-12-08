@@ -1,6 +1,9 @@
 import { BrowserWindow, shell } from 'electron'
+import { closeMainWindow, getMainWindow } from '@/main/window/main/index';
 
-export const initEvent = (mainWindow: BrowserWindow | null) => {
+export const initEvent = () => {
+  const mainWindow = getMainWindow()
+
   // 渲染进程中请求创建一个新窗口之前被调用，例如 window.open()，
   // 带 target="_blank" 的链接，按shift 点击链接，
   // 或使用 <form target="_blank"> 提交一个表单。
@@ -20,6 +23,6 @@ export const initEvent = (mainWindow: BrowserWindow | null) => {
   })
 
   mainWindow?.on('closed', () => {
-    mainWindow = null
+    closeMainWindow()
   })
 }

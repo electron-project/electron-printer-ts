@@ -1,6 +1,10 @@
 import { BrowserWindow, globalShortcut } from 'electron';
+import { getMainWindow } from '@/main/window/main/index';
 
-export function regGlobalShortcut(win: BrowserWindow) {
+export function regGlobalShortcut() {
+  const win = getMainWindow()
+  if (!win) return
+
   globalShortcut.register('CmdOrCtrl + e', async () => {
     console.log('创建快捷键');
   });

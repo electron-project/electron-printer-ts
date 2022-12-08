@@ -1,5 +1,5 @@
 import { ipcMain, desktopCapturer } from 'electron'
-import { closeScreenShotWindow, createScreenShotWindow, getScreenShotWindow } from '@/main/window/screenshot/index'
+import { closeScreenShotWindow, createScreenShotWindow, getScreenShotWindow } from '@/main/window/screenshot'
 import { getMainWindow } from '@/main/window/main'
 import { getSize } from '@/main/utils/size'
 

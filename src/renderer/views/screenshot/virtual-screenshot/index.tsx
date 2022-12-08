@@ -3,10 +3,10 @@ import styles from './index.module.scss'
 import { useEffect, useRef, useState } from 'react'
 import Konva from 'konva'
 
-const Screenshot = ({ className }: any) => {
+const VirtualScreenshot = ({ className }: any) => {
   const ipcRenderer = window.electron.ipcRenderer
 
-  const containerClass = `${styles['screenshot']} ${className || ''}`
+  const containerClass = `${styles['virtual-screenshot']} ${className || ''}`
   const [bg, setBg] = useState('')
   const containerRef = useRef<any>(null)
 
@@ -151,8 +151,8 @@ const Screenshot = ({ className }: any) => {
   )
 }
 
-Screenshot.defaultProps = {
+VirtualScreenshot.defaultProps = {
   className: '',
 }
 
-export default Screenshot
+export default VirtualScreenshot

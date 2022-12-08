@@ -7,6 +7,8 @@ import process from 'process'
 let cutWindow: BrowserWindow | null
 
 export async function createScreenShotWindow() {
+  if (cutWindow) return
+
   const { width, height } = getSize()
   cutWindow = new BrowserWindow({
     width,
@@ -27,15 +29,18 @@ export async function createScreenShotWindow() {
     },
   })
 
-  await cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot'))
+  await cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-layout/use'))
 
   cutWindow.maximize()
   cutWindow.setFullScreen(true)
 }
 
-export function closeScreenShotWindow() {
+export function closeScreenShotWindow(option={force:false}) {
   cutWindow?.close()
-  cutWindow = null
+
+  if (option.force){
+    cutWindow = null
+  }
 }
 
 export const getScreenShotWindow = () => cutWindow

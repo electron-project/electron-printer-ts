@@ -1,8 +1,26 @@
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import { isDev } from '@/constant/env'
 import CurrentPlatform from '@/constant/platform'
+import { getMainWindow } from '@/main/window/main/index';
 
-let win: BrowserWindow
+let win: BrowserWindow|null
+
+export default function createMenu() {
+  win = getMainWindow()
+  if (!win )return
+
+  if (isDev) {
+    setupDevelopmentEnvironment()
+  }
+
+  // 从模板中创建菜单
+  // https://www.electronjs.org/docs/latest/api/menu-item#menuitemid
+  const myMenu = Menu.buildFromTemplate(template)
+
+  // 设置为应用程序菜单
+  Menu.setApplicationMenu(myMenu)
+}
+
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string
@@ -65,21 +83,21 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         label: '刷新',
         accelerator: 'Command+R',
         click: () => {
-          win.webContents.reload()
+          win?.webContents.reload()
         },
       },
       {
         label: '切换全屏',
         accelerator: 'Ctrl+Command+F',
         click: () => {
-          win.setFullScreen(!win.isFullScreen())
+          win?.setFullScreen(!win.isFullScreen())
         },
       },
       {
         label: '切换开发者工具',
         accelerator: 'Alt+Command+I',
         click: () => {
-          win.webContents.toggleDevTools()
+          win?.webContents.toggleDevTools()
         },
       },
     ],
@@ -91,7 +109,7 @@ function buildDarwinTemplate(): MenuItemConstructorOptions[] {
         label: '切换全屏',
         accelerator: 'Ctrl+Command+F',
         click: () => {
-          win.setFullScreen(!win.isFullScreen())
+          win?.setFullScreen(!win.isFullScreen())
         },
       },
     ],
@@ -158,7 +176,7 @@ function buildDefaultTemplate() {
           label: '&关闭窗口',
           accelerator: 'Ctrl+W',
           click: () => {
-            win.close()
+            win?.close()
           },
         },
       ],
@@ -171,14 +189,14 @@ function buildDefaultTemplate() {
               label: '&刷新',
               accelerator: 'Ctrl+R',
               click: () => {
-                win.webContents.reload()
+                win?.webContents.reload()
               },
             },
             {
               label: '切换全屏',
               accelerator: 'F11',
               click: () => {
-                win.setFullScreen(!win.isFullScreen())
+                win?.setFullScreen(!win.isFullScreen())
               },
             },
             {
@@ -186,6 +204,8 @@ function buildDefaultTemplate() {
               // 添加快捷键
               accelerator: 'CmdOrCtrl + shift + i',
               click: () => {
+
+                if (!win) return
                 const { webContents } = win
                 webContents.toggleDevTools()
               },
@@ -196,7 +216,7 @@ function buildDefaultTemplate() {
               label: '切换全屏',
               accelerator: 'F11',
               click: () => {
-                win.setFullScreen(!win.isFullScreen())
+                win?.setFullScreen(!win.isFullScreen())
               },
             },
           ],
@@ -234,35 +254,21 @@ function buildDefaultTemplate() {
 }
 
 function setupDevelopmentEnvironment(): void {
-  win.webContents.on('context-menu', (_, props) => {
+  win?.webContents.on('context-menu', (_, props) => {
     const { x, y } = props
 
     const popUpTemplate = [
       {
         label: '检查元素',
         click: () => {
-          win.webContents.inspectElement(x, y)
+          win?.webContents.inspectElement(x, y)
         },
       },
     ]
 
-    Menu.buildFromTemplate(popUpTemplate).popup({ window: win })
+    Menu.buildFromTemplate(popUpTemplate).popup({ window: win||undefined})
   })
 }
 
 const template = CurrentPlatform.isMac ? buildDefaultTemplate() : buildDarwinTemplate()
 
-export default function createMenu(windows: BrowserWindow) {
-  win = windows
-
-  if (isDev) {
-    setupDevelopmentEnvironment()
-  }
-
-  // 从模板中创建菜单
-  // https://www.electronjs.org/docs/latest/api/menu-item#menuitemid
-  const myMenu = Menu.buildFromTemplate(template)
-
-  // 设置为应用程序菜单
-  Menu.setApplicationMenu(myMenu)
-}

@@ -6,7 +6,7 @@ export function resolveHtmlPath(htmlFileName: string, hash?: string) {
     const port = process.env.PORT || 1212
     const url = new URL(`http://localhost:${port}`)
     url.pathname = htmlFileName
-    url.hash = '/' + hash || ''
+    url.hash = hash ? '/' + hash : ''
     return url.href
   }
 

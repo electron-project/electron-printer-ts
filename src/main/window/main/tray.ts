@@ -1,7 +1,11 @@
 import { assetsPath } from '@/constant/icon'
 import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
+import { getMainWindow } from '@/main/window/main/index';
 
-const initTray = (win: BrowserWindow) => {
+const initTray = () => {
+  const win = getMainWindow()
+  if (!win) return
+
   // Mac 只支持 16*16 大小
   const icon = nativeImage.createFromPath(assetsPath('icons/16x16.png'))
   const tray = new Tray(icon)

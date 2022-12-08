@@ -9,13 +9,17 @@ import { PROTOCOL } from '@/constant/url-scheme'
 import path from 'path'
 import * as process from 'process'
 import Platform from '@/constant/platform'
+import { getMainWindow } from '@/main/window/main';
 
 // 获取 app 锁，防止启动第二个实例
 //    获取失败则代表有实例已经运行了
 //    如果当前进程是应用程序的主要实例，则此方法返回true
 // 在 macOS 上, 当用户尝试在 Finder 中打开您的应用程序的第二个实例时, 系统会通过发出 open-file 和 open-url 事件来自动强制执行单个实例。
 // 但是当用户在命令行中启动应用程序时, 系统的单实例机制将被绕过, 您必须手动调用此方法来确保单实例
-export function checkSchemeSetup(win: BrowserWindow) {
+export function checkSchemeSetup() {
+  const win = getMainWindow()
+  if (!win) return
+
   // 获取单实例锁
   const gotTheLock = app.requestSingleInstanceLock()
   // windows如果是通过url schema启动则发出事件处理

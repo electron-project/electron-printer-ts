@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { assetsPath } from '@/constant/icon'
-import initPrint from '@/main/window/print/ipc'
+import initPrint from '@/main/ipc/print'
 
 export async function createPrintWindow() {
   let printWindow: BrowserWindow | null = new BrowserWindow({
@@ -16,9 +16,9 @@ export async function createPrintWindow() {
     },
   })
 
+
+  initPrint()
+
+  await printWindow.loadURL(resolveHtmlPath('index.html', 'printer-layout/print'))
   printWindow.show()
-
-  initPrint(printWindow)
-
-  await printWindow.loadURL(resolveHtmlPath('index.html', 'print'))
 }

@@ -13,10 +13,13 @@ import { regGlobalShortcut } from '@/main/window/main/global-shortcut'
 import '@/main/window/app/url-scheme'
 import * as process from 'process'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
+import initPrint from '@/main/ipc/print'
 
 let mainWindow: BrowserWindow | null
 
 export const createMainWindow = async () => {
+  if (mainWindow) return
+
   mainWindow = new BrowserWindow({
     show: false, // 为了让初始化窗口显示无闪烁，先关闭显示，等待加载完成后再显示。
     width: 1024,
@@ -24,10 +27,8 @@ export const createMainWindow = async () => {
     icon: assetsPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
-      webviewTag: true, // 启用 webview 标签功能
     },
   })
-  mainWindow.show()
 
   // objc[85955]: Class WebSwapCGLLayer is implemented in both xxxxx One of the two will be used. Which one is undefined.
   // Failed to fetch extension, trying 4 more times
@@ -36,29 +37,36 @@ export const createMainWindow = async () => {
   // if (isDev) await installExtensions();
 
   registerLink()
-  checkSchemeSetup(mainWindow)
+  checkSchemeSetup()
 
-  initEvent(mainWindow)
-  await initElectronRemote(mainWindow)
+  initEvent()
+  await initElectronRemote()
 
-  initTray(mainWindow)
-  createMenu(mainWindow)
-  regGlobalShortcut(mainWindow)
+  initTray()
+  createMenu()
+  regGlobalShortcut()
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   AppUpdater().then()
 
+  initPrint()
+
   // 设置为最顶层
   // win.setAlwaysOnTop(true)
   // 可以让主进程打开文件或者一个链接;
   // win.loadURL(`www.baidu.com`)
-  await mainWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-use'))
+  await mainWindow.loadURL(resolveHtmlPath('index.html', 'main'))
+
+  mainWindow.show()
 }
 
-export function closeMainWindow() {
+export function closeMainWindow(option={force:false}) {
   mainWindow?.close()
-  mainWindow = null
+
+  if (option.force){
+    mainWindow = null
+  }
 }
 
 export const getMainWindow = () => mainWindow
