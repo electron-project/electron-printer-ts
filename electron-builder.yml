@@ -34,13 +34,7 @@ asar: true
 asarUnpack: '**\*.{node,dll}'
 
 # url scheme 协议配置 针对 mac
-protocols: [
-  {
-    name: "printapp",
-    schemes: ["://"],
-    role: "Viewer"
-  }
-]
+protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]
 
 #  添加控制变量
 #  打包线上应用，控制变量为 production，此设置会直接在打包的 package.json 中加入 "env" = "production" 这个变量，
@@ -114,7 +108,7 @@ nsis:
   menuCategory: false # 是否为开始菜单快捷方式和程序文件目录创建子菜单。如果true，将使用公司名称。或字符串值
   shortcutName: 压缩图片 # 快捷方式名称 默认为应用程序名称
   # guid: "x", //注册表名字，不推荐修改
-  include: './script/installer.nsh', # 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
+  include: './script/installer.nsh' # 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
   # script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 
 mac:
