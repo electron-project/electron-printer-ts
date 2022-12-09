@@ -5,6 +5,7 @@ import VirtualScreenshot from '@/renderer/views/screenshot/virtual-screenshot';
 import ScreenshotLayout from '@/renderer/views/screenshot/layout';
 import PrinterLayout from '@/renderer/views/printer/layout';
 import MainLayout from '@/renderer/views/main/layout';
+import PrintSetting from '@/renderer/views/printer/setting';
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
         index: true,
         path: 'print',
         element: <Print />,
+      },
+      {
+        index: true,
+        path: 'setting',
+        element: <PrintSetting />,
       },
     ],
   },

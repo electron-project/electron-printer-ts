@@ -3,6 +3,7 @@ import { createMainWindow } from '@/main/window/main'
 import { createPrintWindow } from '@/main/window/print'
 import Platform from '@/constant/platform'
 import '@/main/ipc/index'
+import { createPrintSetting } from '@/main/window/print-setting';
 
 // 当Electron完成时，该方法将被调用
 // 初始化并准备创建浏览器窗口。
@@ -10,8 +11,9 @@ import '@/main/ipc/index'
 app
   .whenReady()
   .then(() => {
-    createMainWindow().then()
-    // createPrintWindow().then()
+    // createMainWindow().then()
+    createPrintWindow().then()
+    // createPrintSetting().then()
   })
   .catch(console.log)
 

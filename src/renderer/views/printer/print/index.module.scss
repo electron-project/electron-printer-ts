@@ -2,6 +2,46 @@
   width: inherit;
   height: inherit;
 
+  .container{
+    width: 464px;
+    height: 232px;
+    display: flex;
+    justify-content: center;
+
+    .center{
+      .img{
+        display: block;
+        margin: 32px auto 16px ;
+        width: 68px;
+        height: 68px;
+      }
+
+      .tip{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+
+        display: flex;
+        align-items: center;
+        text-align: center;
+
+        color: #86909C;
+
+        margin-bottom: 28px;
+
+        .weight{
+          font-weight: 700;
+          color: black;
+        }
+      }
+
+      .button{
+        display: block;
+        margin:auto;
+      }
+    }
+  }
+
   .webview{
     display:flex;
     width: inherit;

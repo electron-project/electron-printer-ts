@@ -12,7 +12,6 @@ const MainLayout = ({className}:any) => {
 
 MainLayout.defaultProps = {
     className:'',
-
 };
 
 export default MainLayout;

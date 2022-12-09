@@ -3,6 +3,8 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import WebviewTag = Electron.WebviewTag
 import PrinterInfo = Electron.PrinterInfo
 import IpcMessageEvent = Electron.IpcMessageEvent
+import printLogo from '@/../assets/image/printer/logo.png'
+import { Button } from 'antd'
 
 const Print = () => {
   // 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
@@ -11,15 +13,20 @@ const Print = () => {
   const containerClass = `${styles['print']} ${'print' || ''}`
 
   const webviewRef = useRef<WebviewTag | null>(null)
-  const [printList, setPrintList] = useState<PrinterInfo[]>([])
+  const printListRef = useRef<PrinterInfo[]>([])
+  const [printName, setPrintName] = useState<string>('')
 
   useEffect(() => {
-    ipcRenderer.send('ipc-printer-getList')
+    ipcRenderer.send('PRINTER_GET_LIST')
 
-    ipcRenderer.once('ipc-printer-getList', (event, list: unknown) => {
+    ipcRenderer.once('PRINTER_GET_LIST', (event, list: unknown) => {
       if (Array.isArray(list)) {
-        setPrintList(list)
+        printListRef.current  = list
       }
+    })
+
+    ipcRenderer.once('PRINTER_DEVICE_NAME', (event, name: string[]) => {
+      setPrintName(name[0])
     })
 
     initWebView()
@@ -34,27 +41,27 @@ const Print = () => {
         webview.print({
           silent: true, // 是否是静默打印
           printBackground: false,
-          deviceName: 'RDPrinter',// 打印机的名称
-          color:true, // 设置打印机是彩色还是灰色
-          margins:{
-            marginType:'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
+          deviceName: 'RDPrinter', // 打印机的名称
+          color: true, // 设置打印机是彩色还是灰色
+          margins: {
+            marginType: 'default' // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
           },
-          landscape:false ,// 网页是否应以横向模式打印
-          scaleFactor:1, // 网页的比例
-          pagesPerSheet:undefined, // 每页要打印的页数
-          collate:undefined, // 网页是否应该对比
+          landscape: false, // 网页是否应以横向模式打印
+          scaleFactor: 1, // 网页的比例
+          pagesPerSheet: undefined, // 每页要打印的页数
+          collate: undefined, // 网页是否应该对比
           // 要打印的页面范围
-          pageRanges:[
+          pageRanges: [
             {
-              from:0,// 要打印的第一页的索引 0 开始
-              to:1, // 要打印的最后一页的索引 0 开始
+              from: 0, // 要打印的第一页的索引 0 开始
+              to: 1 // 要打印的最后一页的索引 0 开始
             }
           ],
-          duplexMode:"simplex" , //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
-          dpi:undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
-          header:'', // 要作为页眉打印的字符串
-          footer:'', // 要作为页脚打印的字符串
-          pageSize:'A4',// 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
+          duplexMode: 'simplex', //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
+          dpi: undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
+          header: '', // 要作为页眉打印的字符串
+          footer: '', // 要作为页脚打印的字符串
+          pageSize: 'A4' // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
         })
       }
     })
@@ -67,24 +74,37 @@ const Print = () => {
   const startPrint = () => {
     const data = {
       batchNo: '1',
-      pn: '2',
+      pn: '2'
     }
 
-    webviewRef.current?.send('webview-set-html', data)
+    webviewRef.current?.send('WEBVIEW_SET_HTML', data)
+  }
+
+  const setting = () => {
+    ipcRenderer.send('PRINTER_OPEN_SETTING', printListRef.current)
   }
 
   return (
     <div className={containerClass}>
       <div onClick={startPrint}>开始打印</div>
 
-      {printList.map((p, pIndex) => {
-        return (
-          <Fragment key={pIndex}>
-            <div>名字：{p.name}</div>
-            <div>是否是默认：{p.isDefault.toString()}</div>
-          </Fragment>
-        )
-      })}
+      <div className={styles.container}>
+        <div className={styles.center}>
+          <img className={styles.img} src={printLogo} alt="" />
+          <div className={styles.tip}>
+            {printName ? (
+              <span>
+                当前已连接<span className={styles.weight}> {printName} </span>设备
+              </span>
+            ) : (
+              '请连接打印机使用'
+            )}
+          </div>
+          <Button className={styles.button} type="primary" onClick={setting}>
+            设置
+          </Button>
+        </div>
+      </div>
 
       {/* printWindow.loadFile('xx.html'); */}
       {/* 也可以使用 mainWindow.webContents.print 进行打印 */}
@@ -106,7 +126,7 @@ const Print = () => {
 }
 
 Print.defaultProps = {
-  className: '',
+  className: ''
 }
 
 export default Print

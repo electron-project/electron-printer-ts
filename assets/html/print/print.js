@@ -12,7 +12,7 @@ window.onload = () => {
   //引入ipcRenderer对象
   // const JsBarcode = require('jsbarcode');
   //监听渲染线程传过来的webview-print-render事件
-  ipcRenderer.on('webview-set-html', (event, data) => {
+  ipcRenderer.on('WEBVIEW_SET_HTML', (event, data) => {
     // const width = data.barCode.length > 14 ? 1 : 2
     // 生成条形码
     // JsBarcode('#barCode', data.barCode, {
