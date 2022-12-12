@@ -6,10 +6,11 @@ import IpcMessageEvent = Electron.IpcMessageEvent
 import printLogo from '@/../assets/image/printer/logo.png'
 import { Button } from 'antd'
 
+// 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
+const ipcRenderer = window.require('electron').ipcRenderer
+const Store = window.require('electron-store')
+
 const Print = () => {
-  // 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
-  const ipcRenderer = window.require('electron').ipcRenderer
-  const Store = window.require('electron-store')
   const store = new Store()
 
   const containerClass = `${styles['print']} ${'print' || ''}`
@@ -119,8 +120,8 @@ const Print = () => {
         className={styles.webview}
         ref={webviewRef}
         id="printWebview"
-        // src={'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\assets\\html\\print\\index.html'}
-        src={'file:///Users/user/Desktop/work-code/electron-printer/assets/html/print/index.html'}
+        src={'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer\\assets\\html\\print\\index.html'}
+        // src={'file:///Users/user/Desktop/work-code/electron-printer/assets/html/print/index.html'}
         // 用于打印的属性
         //@ts-ignore
         // 需要在窗口设置中及 webview 中都设置 nodeintegration webpreferences

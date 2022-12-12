@@ -14,7 +14,7 @@ copyright: Copyright © 2023 miniOcean404
 
 appId: com.davinci-print.app
 # "store" | "normal"| "maximum" store 可以显着减少构建时间。
-compression: maximum
+compression: store
 # 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
 files:
   - dist
@@ -22,14 +22,14 @@ files:
   - package.json
 # 打包后拷贝静态文件到指定位置
 extraResources:
-  - from: ./assets/**
+  - from: ../../assets/**
     to: ./extraResources/**
 # 打包后拷贝文件到指定位置
 extraFiles:
-  - from: ./assets/**
-    to: ./extraResources/**
+  - from: ../../assets/**
+    to: ./extraFile/**
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
-asar: true
+asar: false
 # 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
 asarUnpack: '**\*.{node,dll}'
 
@@ -66,9 +66,10 @@ win:
   # squirrel, 7z, zip, tar.xz, tar.lz, tar.gz, tar.bz2,dir
   # AppX 包只能在 Windows 10 上构建
   target:
-    - target: nsis
-      arch:
-        - x64 # 64位
+    #    - target: nsis
+    #      arch:
+    #        - x64 # 64位
+    - target: portable
 
 nsis:
   oneClick: false # 是否一键安装
@@ -96,7 +97,7 @@ nsis:
   menuCategory: false # 是否为开始菜单快捷方式和程序文件目录创建子菜单。如果true，将使用公司名称。或字符串值
   shortcutName: 打印机 # 快捷方式名称 默认为应用程序名称
   # guid: "x", //注册表名字，不推荐修改
-  include: './script/installer.nsh' # 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
+  include: './script/windows-installer.nsh' # 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
   # script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 
 publish:

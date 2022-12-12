@@ -22,11 +22,11 @@ files:
   - package.json
 # 打包后拷贝静态文件到指定位置
 extraResources:
-  - from: ./assets/**
+  - from: ../assets/**
     to: ./extraResources/**
 # 打包后拷贝文件到指定位置
 extraFiles:
-  - from: ./assets/**
+  - from: ../assets/**
     to: ./extraResources/**
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
 asar: true
