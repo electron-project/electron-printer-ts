@@ -1,19 +1,19 @@
-import path from 'path';
-import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import checkNodeEnv from '../scripts/check-node-env';
+import path from 'path'
+import webpack from 'webpack'
+import { merge } from 'webpack-merge'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import baseConfig from './webpack.config.base'
+import webpackPaths from './webpack.paths'
+import checkNodeEnv from '../scripts/check-node-env'
 
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
 if (process.env.NODE_ENV === 'production') {
-  checkNodeEnv('development');
+  checkNodeEnv('development')
 }
 
 const configuration: webpack.Configuration = {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
 
   mode: 'development',
 
@@ -66,6 +66,6 @@ const configuration: webpack.Configuration = {
   },
 
   watch: true,
-};
+}
 
-export default merge(baseConfig, configuration);
+export default merge(baseConfig, configuration)

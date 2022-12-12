@@ -15,5 +15,7 @@
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
   "dependencies": {
+    "electron-store": "^8.1.0",
+    "qrcode": "^1.5.1"
   }
 }

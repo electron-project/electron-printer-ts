@@ -23,16 +23,23 @@ afterSign: .erb/scripts/notarize.js
 # 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
 files:
   - dist
-  - '**/node_modules' # 如果想打包 node_modules 必须这样写
+  - '**/node_modules' # 如果想打包 node_modules 必须在 release/app/package.json 中填写依赖，并运行 postinstall 命令，这里的填写没有用
   - package.json
+
 # 打包后拷贝静态文件到指定位置 文件起始位置是 项目根目录
 extraResources:
-  - from: assets/html/print
-    to: ./extraResources
+  - from: assets
+    to: ./assets
+    filter:
+      - '!webview' # 拷贝 assets 的文件夹不包括 webview 文件夹
+  - from: assets/webview
+    to: ./app/webview
+
 # 打包后拷贝文件到指定位置
 extraFiles:
   - from: assets
     to: ./extraFile
+
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
 asar: true
 # 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
