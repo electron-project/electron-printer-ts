@@ -24,7 +24,7 @@ afterSign: .erb/scripts/notarize.js
 # 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
 files:
   - dist
-  - node_modules
+  - '**/node_modules' # 如果想打包 node_modules 必须这样写
   - package.json
 # 打包后拷贝静态文件到指定位置
 extraResources:
