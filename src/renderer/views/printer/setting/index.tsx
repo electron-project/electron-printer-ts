@@ -1,7 +1,6 @@
 import styles from './index.module.scss'
 import { Button, message, Select } from 'antd'
 import { useEffect, useRef, useState } from 'react'
-import PrinterInfo = Electron.PrinterInfo
 
 const PrintSetting = ({ className }: any) => {
   const ipcRenderer = window.electron.ipcRenderer
@@ -48,7 +47,7 @@ const PrintSetting = ({ className }: any) => {
 }
 
 PrintSetting.defaultProps = {
-  className: ''
+  className: '',
 }
 
 export default PrintSetting

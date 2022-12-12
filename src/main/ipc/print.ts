@@ -1,8 +1,9 @@
 import { ipcMain } from 'electron'
-import { getPrintWindow } from '@/main/window/print'
+import { createPrintWindow, getPrintWindow } from '@/main/window/print'
 import { createPrintSetting, getPrintSetting } from '@/main/window/print-setting'
+import { getElectronStore } from '@/main/utils/store'
 
-const initPrint = async () => {
+const initPrintIPC = async () => {
   ipcMain.on('PRINTER_GET_LIST', async (event, args) => {
     const win = getPrintWindow()
 
@@ -18,10 +19,15 @@ const initPrint = async () => {
 
   ipcMain.on('PRINTER_SURE_DEVICE', async (event, args) => {
     const win = getPrintSetting()
-    const print = getPrintWindow()
     win?.destroy()
-    print?.webContents.send('PRINTER_DEVICE_NAME', args)
+
+    const store = getElectronStore()
+    store?.delete('device-name')
+    store?.set('device-name', args[0])
+
+    const print = getPrintWindow()
+    print?.webContents.send('PRINTER_SURE_DEVICE')
   })
 }
 
-export default initPrint
+export default initPrintIPC

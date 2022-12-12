@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import WebviewTag = Electron.WebviewTag
 import PrinterInfo = Electron.PrinterInfo
 import IpcMessageEvent = Electron.IpcMessageEvent
@@ -9,6 +9,8 @@ import { Button } from 'antd'
 const Print = () => {
   // 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
   const ipcRenderer = window.require('electron').ipcRenderer
+  const Store = window.require('electron-store')
+  const store = new Store()
 
   const containerClass = `${styles['print']} ${'print' || ''}`
 
@@ -21,13 +23,17 @@ const Print = () => {
 
     ipcRenderer.once('PRINTER_GET_LIST', (event, list: unknown) => {
       if (Array.isArray(list)) {
-        printListRef.current  = list
+        printListRef.current = list
       }
     })
 
-    ipcRenderer.once('PRINTER_DEVICE_NAME', (event, name: string[]) => {
-      setPrintName(name[0])
+    // 获取打印机设备的名字
+    setPrintName(store.get('device-name'))
+    ipcRenderer.once('PRINTER_SURE_DEVICE', () => {
+      setPrintName(store.get('device-name'))
     })
+
+    // console.log(electronStore.get('device-name'))
 
     initWebView()
   }, [])
@@ -36,15 +42,15 @@ const Print = () => {
     const webview: WebviewTag | null = webviewRef.current
 
     webview?.addEventListener('ipc-message', (event: IpcMessageEvent) => {
-      if (event.channel === 'webview-start-print') {
+      if (event.channel === 'webview-start-print' && printName) {
         // 如果收到<webview>传过来的事件，名为"webview-print-do"，就执行 webview.print打印方法，打印<webview>里面的内容。
         webview.print({
           silent: true, // 是否是静默打印
           printBackground: false,
-          deviceName: 'RDPrinter', // 打印机的名称
+          deviceName: printName, // 打印机的名称
           color: true, // 设置打印机是彩色还是灰色
           margins: {
-            marginType: 'default' // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
+            marginType: 'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
           },
           landscape: false, // 网页是否应以横向模式打印
           scaleFactor: 1, // 网页的比例
@@ -54,14 +60,14 @@ const Print = () => {
           pageRanges: [
             {
               from: 0, // 要打印的第一页的索引 0 开始
-              to: 1 // 要打印的最后一页的索引 0 开始
-            }
+              to: 1, // 要打印的最后一页的索引 0 开始
+            },
           ],
           duplexMode: 'simplex', //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
           dpi: undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
           header: '', // 要作为页眉打印的字符串
           footer: '', // 要作为页脚打印的字符串
-          pageSize: 'A4' // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
+          pageSize: 'A4', // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
         })
       }
     })
@@ -74,7 +80,7 @@ const Print = () => {
   const startPrint = () => {
     const data = {
       batchNo: '1',
-      pn: '2'
+      pn: '2',
     }
 
     webviewRef.current?.send('WEBVIEW_SET_HTML', data)
@@ -126,7 +132,7 @@ const Print = () => {
 }
 
 Print.defaultProps = {
-  className: ''
+  className: '',
 }
 
 export default Print

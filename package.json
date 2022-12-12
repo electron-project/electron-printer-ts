@@ -96,6 +96,7 @@
     "antd": "^5.0.5",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
+    "electron-store": "^8.1.0",
     "electron-updater": "^5.2.3",
     "konva": "^8.3.14",
     "qrcode": "^1.5.1",
