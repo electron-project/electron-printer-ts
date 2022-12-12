@@ -20,6 +20,11 @@ const Print = () => {
   const [printName, setPrintName] = useState<string>('')
 
   useEffect(() => {
+    initEvent()
+    initWebView()
+  }, [])
+
+  const initEvent = () => {
     ipcRenderer.send('PRINTER_GET_LIST')
 
     ipcRenderer.once('PRINTER_GET_LIST', (event, list: unknown) => {
@@ -28,6 +33,16 @@ const Print = () => {
       }
     })
 
+    // deep link 进行打印
+    ipcRenderer.once('DEEP_LINK_PRINT_PARAMS', (event, params: unknown) => {
+      webviewRef.current?.send('WEBVIEW_SET_HTML', params)
+    })
+  }
+
+  const initWebView = () => {
+    const webview: WebviewTag | null = webviewRef.current
+
+    // 获取设备名字坚挺
     let deviceName = store.get('device-name')
     // 获取打印机设备的名字
     setPrintName(deviceName)
@@ -36,24 +51,13 @@ const Print = () => {
       setPrintName(deviceName)
     })
 
-    // deep link 进行打印
-    ipcRenderer.once('DEEP_LINK_PRINT_PARAMS', (event, params: unknown) => {
-      webviewRef.current?.send('WEBVIEW_SET_HTML', params)
-    })
-
-    initWebView()
-  }, [])
-
-  const initWebView = () => {
-    const webview: WebviewTag | null = webviewRef.current
-
     webview?.addEventListener('ipc-message', (event: IpcMessageEvent) => {
-      if (event.channel === 'WEBVIEW_START_PRINT' && printName) {
+      if (event.channel === 'WEBVIEW_START_PRINT' && deviceName) {
         // 如果收到<webview>传过来的事件，名为"webview-print-do"，就执行 webview.print打印方法，打印<webview>里面的内容。
         webview.print({
           silent: true, // 是否是静默打印
           printBackground: false,
-          deviceName: printName, // 打印机的名称
+          deviceName, // 打印机的名称
           color: true, // 设置打印机是彩色还是灰色
           // margins: {
           //   marginType: 'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
@@ -79,7 +83,12 @@ const Print = () => {
     })
 
     webview?.addEventListener('console-message', (e) => {
-      console.log('%cWebview 中控制台信息:\r\n', 'color:red', e.message)
+      console.log(
+        `%cWebview 中控制台信息 level:${e.level}  行:${e.line} :\r\n`,
+        'color:red',
+        e.message
+        // `文件 ${e.sourceId}`
+      )
     })
   }
 

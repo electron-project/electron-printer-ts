@@ -25,7 +25,7 @@ files:
   - dist
   - '**/node_modules' # 如果想打包 node_modules 必须这样写
   - package.json
-# 打包后拷贝静态文件到指定位置
+# 打包后拷贝静态文件到指定位置 文件起始位置是 项目根目录
 extraResources:
   - from: assets/html/print
     to: ./extraResources

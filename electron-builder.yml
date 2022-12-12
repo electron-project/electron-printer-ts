@@ -36,7 +36,7 @@ extraFiles:
     to: ./extraFiles
 
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
-asar: false
+asar: true
 # 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
 asarUnpack: '**\*.{node,dll}'
 
