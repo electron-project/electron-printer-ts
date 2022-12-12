@@ -2,36 +2,32 @@ window.onload = () => {
   const { ipcRenderer } = require('electron')
   const qrcode = require('qrcode')
 
-
-  qrcode.toDataURL( 'sample text', {margin:0},function (error,url) {
-   const qr =  document.getElementById('qrcode')
-    qr.setAttribute('src',url)
-  })
-
   // ★★★★★★因为打印机的大小未做调整，搞了好久没搞好，需要到系统里面设置打印机的纸张大小★★★★★★
   //引入ipcRenderer对象
   // const JsBarcode = require('jsbarcode');
   //监听渲染线程传过来的webview-print-render事件
   ipcRenderer.on('WEBVIEW_SET_HTML', (event, data) => {
-    // const width = data.barCode.length > 14 ? 1 : 2
-    // 生成条形码
-    // JsBarcode('#barCode', data.barCode, {
-    //   width: width,//条形码中每条线的宽度
-    //   height: 100,//条形码高度
-    //   displayValue: false//条形码下面是否显示对应的值
-    // });
+    qrcode.toDataURL(data.link, { margin: 0 }, function (error, url) {
+      const qr = document.getElementById('qrcode')
+      qr.setAttribute('src', url)
+    })
+
+    const name = document.querySelector('.name')
+    name.innerHTML = name.innerHTML.replace('{{name}}', data.name)
+
+    const code = document.querySelector('.code')
+    code.innerHTML = code.innerHTML.replace('{{code}}', data.code)
+
+    const category = document.querySelector('.category')
+    category.innerHTML = category.innerHTML.replace('{{category}}', data.categoryName)
+
     // 替换占位符
-    let html = document.getElementsByClassName('content')[0].innerHTML
-    html = html.replace('{{batchNo}}', data.batchNo)
-    html = html.replace('{{pn}}', data.pn)
-    html = html.replace('{{specifications}}', data.specifications)
-    html = html.replace('{{quantity}}', data.quantity)
-    html = html.replace('{{date}}', data.date)
-    html = html.replace('{{employee}}', data.employee)
-    html = html.replace('{{barCode}}', data.barCode)
-    //var obj = document.getElementById('bd')
-    document.getElementsByClassName('content')[0].innerHTML = html
+    // let html = document.getElementsByClassName('title')[0].innerHTML
+    // html = html.replace('{{title}}', data.categoryName)
+    //
+    // //var obj = document.getElementById('bd')
+    // document.getElementsByClassName('content')[0].innerHTML = html
     //通过ipcRenderer对象的sendToHost方法和渲染线程通讯，告诉渲染线程打印的内容已经准备完毕
-    ipcRenderer.sendToHost('webview-start-print')
+    ipcRenderer.sendToHost('WEBVIEW_START_PRINT')
   })
 }

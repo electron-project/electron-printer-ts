@@ -28,13 +28,18 @@ const Print = () => {
       }
     })
 
+    let deviceName = store.get('device-name')
     // 获取打印机设备的名字
-    setPrintName(store.get('device-name'))
+    setPrintName(deviceName)
     ipcRenderer.once('PRINTER_SURE_DEVICE', () => {
-      setPrintName(store.get('device-name'))
+      deviceName = store.get('device-name')
+      setPrintName(deviceName)
     })
 
-    // console.log(electronStore.get('device-name'))
+    // deep link 进行打印
+    ipcRenderer.once('DEEP_LINK_PRINT_PARAMS', (event, params: unknown) => {
+      webviewRef.current?.send('WEBVIEW_SET_HTML', params)
+    })
 
     initWebView()
   }, [])
@@ -43,32 +48,32 @@ const Print = () => {
     const webview: WebviewTag | null = webviewRef.current
 
     webview?.addEventListener('ipc-message', (event: IpcMessageEvent) => {
-      if (event.channel === 'webview-start-print' && printName) {
+      if (event.channel === 'WEBVIEW_START_PRINT' && printName) {
         // 如果收到<webview>传过来的事件，名为"webview-print-do"，就执行 webview.print打印方法，打印<webview>里面的内容。
         webview.print({
           silent: true, // 是否是静默打印
           printBackground: false,
           deviceName: printName, // 打印机的名称
           color: true, // 设置打印机是彩色还是灰色
-          margins: {
-            marginType: 'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
-          },
-          landscape: false, // 网页是否应以横向模式打印
-          scaleFactor: 1, // 网页的比例
-          pagesPerSheet: undefined, // 每页要打印的页数
-          collate: undefined, // 网页是否应该对比
-          // 要打印的页面范围
-          pageRanges: [
-            {
-              from: 0, // 要打印的第一页的索引 0 开始
-              to: 1, // 要打印的最后一页的索引 0 开始
-            },
-          ],
-          duplexMode: 'simplex', //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
-          dpi: undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
-          header: '', // 要作为页眉打印的字符串
-          footer: '', // 要作为页脚打印的字符串
-          pageSize: 'A4', // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
+          // margins: {
+          //   marginType: 'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
+          // },
+          // landscape: false, // 网页是否应以横向模式打印
+          // scaleFactor: 1, // 网页的比例
+          // pagesPerSheet: undefined, // 每页要打印的页数
+          // collate: undefined, // 网页是否应该对比
+          // // 要打印的页面范围
+          // pageRanges: [
+          //   {
+          //     from: 0, // 要打印的第一页的索引 0 开始
+          //     to: 1, // 要打印的最后一页的索引 0 开始
+          //   },
+          // ],
+          // duplexMode: 'simplex', //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
+          // dpi: undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
+          // header: '', // 要作为页眉打印的字符串
+          // footer: '', // 要作为页脚打印的字符串
+          // pageSize: 'A4', // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
         })
       }
     })

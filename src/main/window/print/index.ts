@@ -2,6 +2,7 @@ import { BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { assetsPath } from '@/constant/icon'
 import initPrintIPC from '@/main/ipc/print'
+import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 
 let printWindow: BrowserWindow | null
 
@@ -17,6 +18,9 @@ export async function createPrintWindow() {
       contextIsolation: false,
     },
   })
+
+  registerLink()
+  checkSchemeSetup()
 
   await initPrintIPC()
 

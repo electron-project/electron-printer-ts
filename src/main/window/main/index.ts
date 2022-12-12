@@ -36,9 +36,6 @@ export const createMainWindow = async () => {
   // 必须在 loadURL 之前进行安装
   // if (isDev) await installExtensions();
 
-  registerLink()
-  checkSchemeSetup()
-
   initEvent()
   await initElectronRemote()
 

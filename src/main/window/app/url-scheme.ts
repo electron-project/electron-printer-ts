@@ -9,7 +9,8 @@ import { PROTOCOL } from '@/constant/url-scheme'
 import path from 'path'
 import * as process from 'process'
 import Platform from '@/constant/platform'
-import { getMainWindow } from '@/main/window/main';
+import { getMainWindow } from '@/main/window/main'
+import { getPrintWindow } from '@/main/window/print'
 
 // 获取 app 锁，防止启动第二个实例
 //    获取失败则代表有实例已经运行了
@@ -17,7 +18,7 @@ import { getMainWindow } from '@/main/window/main';
 // 在 macOS 上, 当用户尝试在 Finder 中打开您的应用程序的第二个实例时, 系统会通过发出 open-file 和 open-url 事件来自动强制执行单个实例。
 // 但是当用户在命令行中启动应用程序时, 系统的单实例机制将被绕过, 您必须手动调用此方法来确保单实例
 export function checkSchemeSetup() {
-  const win = getMainWindow()
+  const win = getPrintWindow()
   if (!win) return
 
   // 获取单实例锁
@@ -83,9 +84,15 @@ function listenerInstance(win: BrowserWindow) {
 }
 
 function urlSchemeParams(url: string) {
-  // printApp://?name=1&pwd=2
+  // printApp://?name=风扇&code=1243&categoryName=其他&link=https://erp.davincimotor.com/e/X2t8khUa-jayGQ752R6JR
   const urlObj = new URL(url)
   const { searchParams } = urlObj
 
   let name = searchParams.get('name')
+  let code = searchParams.get('code')
+  let categoryName = searchParams.get('categoryName')
+  let link = searchParams.get('link')
+
+  const printWin = getPrintWindow()
+  printWin?.webContents.send('DEEP_LINK_PRINT_PARAMS', { name, code, categoryName, link })
 }

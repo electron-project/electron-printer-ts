@@ -10,22 +10,19 @@
   </head>
 
   <body>
-    <div id='container'>
-      <div class='left'>
-        <img class='logo' src='./assets/logo.png' alt=''/>
-        <div class='title'>
-          这一行是设备名称一共就这么长如果超过一行就折行显示
-        </div>
+    <div id="container">
+      <div class="left">
+        <img class="logo" src="./assets/logo.png" alt="" />
+        <div class="name">{{name}}</div>
 
-        <div class='info-container'>
-          <div class='code'>DTFA05010057</div>
-          <div class='name'>媒体设备</div>
+        <div class="info-container">
+          <div class="code">{{code}}</div>
+          <div class="category">{{category}}</div>
         </div>
       </div>
 
-
-      <div class='right'>
-        <img id='qrcode' src='' alt=''/>
+      <div class="right">
+        <img id="qrcode" src="" alt="" />
       </div>
     </div>
   </body>
