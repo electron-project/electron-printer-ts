@@ -1,0 +1,216 @@
+# 相对于 json 语法 数组成员用
+#    a
+#     -b
+# 对象 层级的tab
+#    a
+#     b
+
+# electron-builder 打包配置文件
+
+# 安装后的应用名 如果未在build配置内部指定，则使用productName在顶层定义的属性package.json。如果未在 的顶层指定，package.json则使用name 属性。
+productName: 打印机
+# 版权
+copyright: Copyright © 2023 miniOcean404
+
+appId: com.davinci-print.app
+# "store" | "normal"| "maximum" store 可以显着减少构建时间。
+compression: maximum
+# 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
+files:
+  - dist
+  - node_modules
+  - package.json
+# 打包后拷贝静态文件到指定位置
+extraResources:
+  - from: ./assets/**
+    to: ./extraResources/**
+# 打包后拷贝文件到指定位置
+extraFiles:
+  - from: ./assets/**
+    to: ./extraResources/**
+# 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
+asar: true
+# 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
+asarUnpack: '**\*.{node,dll}'
+
+# url scheme 协议配置 针对 mac
+protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]
+
+#  添加控制变量
+#  打包线上应用，控制变量为 production，此设置会直接在打包的 package.json 中加入 "env" = "production" 这个变量，
+#  可以在文件中引用 const pjson = require('./package.json');  此时 pjson.env 等于 'production'
+extraMetadata:
+  env: production
+# 打包输入目录
+directories:
+  app: release/app
+  buildResources: assets
+  output: release/build
+
+# 在打包和签名之后（但在打包成可分发格式之前）运行的函数（或文件或模块 ID 的路径）
+afterSign: .erb/scripts/notarize.js
+
+# 所有平台：7z, zip, tar.xz, tar.lz, tar.gz, tar.bz2, dir（解压目录）。
+# ['msi', 'nsis']
+# nsis安装程序、
+# nsis-web（Web 安装程序）、
+# portable（无需安装的便携式应用程序）、
+# AppX（Windows 商店）、
+# Squirrel.Windows
+win:
+  # 应用程序图标的路径。
+  icon: ./assets/icons/icon.ico
+  # 商标和注册商标。
+  legalTrademarks: Copyright © 2022 miniOcean404
+  # nsis, nsis-web(Web 安装程序), portable(无需安装的便携式appx应用程序), msi,
+  # squirrel, 7z, zip, tar.xz, tar.lz, tar.gz, tar.bz2,dir
+  # AppX 包只能在 Windows 10 上构建
+  target:
+    - target: nsis
+      arch:
+        - x64 # 64位
+        - ia32 # 32位
+        - arm64
+        # 淘宝源暂没有这个链接
+        # - armv7l
+    - target: nsis-web
+      arch:
+        - x64
+        - ia32
+        - arm64
+    - target: msi
+      # 便携式
+    - target: portable
+
+nsis:
+  oneClick: false # 是否一键安装
+  perMachine: true #  是否开启安装时权限限制（此电脑或当前用户）true 表示此电脑，false代表当前用户
+  allowElevation: true # 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
+  allowToChangeInstallationDirectory: true # 允许修改安装目录
+  installerIcon: assets/icons/icon.ico # 安装图标
+  uninstallerIcon: assets/icons/icon.ico # 卸载图标
+  # installerHeader: xx/xx.bmp # 仅限辅助安装程序 MUI_HEADERIMAGE 相对于构建资源或项目目录。
+  installerHeaderIcon: assets/icons/icon.ico # 仅限一键式安装程序。标题图标的路径（进度条上方），相对于构建资源或项目目录。默认为build/installerHeaderIcon.ico 或应用程序图标
+  # installerSidebar # 仅限辅助安装程序。
+  # uninstallerSidebar: # 仅限辅助安装程序。
+  uninstallDisplayName: 打印机 # 控制面板中的卸载程序显示名称
+  deleteAppDataOnUninstall: true # 仅限一键式安装程序。卸载时是否删除应用数据。
+  # artifactName: # 工件文件名模板。默认为${productName} Setup ${version}.${ext}.
+
+  displayLanguageSelector: false # 是否显示语言选择对话框。不推荐（默认情况下将使用操作系统语言检测）
+  # installerLanguages #  安装程序语言（例如en_US，de_DE)
+  # multiLanguageInstallerBoolean # 是否创建多语言安装程序。默认为unicode选项值
+  language: '2052' # 卸载后删除用户数据
+  packElevateHelper: # 是否打包 elevate 可执行文件（如果使用每台机器的安装程序或将来可以使用，则需要电子更新程序）如果忽略 perMachine 则为true
+  runAfterFinish: true # 完成后是否运行已安装的应用程序。对于辅助安装程序，相应的复选框将被删除。
+  createDesktopShortcut: always # 创建桌面图标
+  createStartMenuShortcut: true # 创建开始菜单图标
+  menuCategory: false # 是否为开始菜单快捷方式和程序文件目录创建子菜单。如果true，将使用公司名称。或字符串值
+  shortcutName: 打印机 # 快捷方式名称 默认为应用程序名称
+  # guid: "x", //注册表名字，不推荐修改
+  include: './script/installer.nsh' # 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
+  # script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
+
+mac:
+  category: public.app-category.compress # 应用程序类别类型 如在查看应用程序目录时通过查看 -> 按应用程序类别排列的 Finder 中所示。
+  # 目标包类型
+  target:
+    - target: default
+      arch:
+        - arm64
+        - x64
+    - target: dmg
+    - target: mas
+    - target: mas-dev
+    - target: pkg
+    - target: 7z
+    - target: zip
+    - target: tar.xz
+    - target: tar.lz
+    - target: tar.gz
+    - target: tar.bz2
+    - target: dir
+  icon: assets/icons/icon.icns
+  darkModeSupport: true # 是否支持暗模式。
+  # minimumSystemVersion # 运行应用程序所需的最低 macOS 版本。
+  gatekeeperAssess: false # 是否让 electron-osx-sign 验证签名
+  # 临时注释 这是 Mac 进行签名相关
+  identity: # 签名时使用的证书名称
+  entitlements: assets/entitlements.mac.plist # 用于签署应用程序的权利文件的路径。build/entitlements.mac.plist如果存在将使用
+  entitlementsInherit: assets/entitlements.mac.plist # 继承用于签署框架和分发包的安全设置的子权利的路径
+  type: distribution # distribution | development | undefined 是否签署应用程序以进行开发或分发
+  hardenedRuntime: true # 您的应用程序是否必须使用强化运行时进行签名。
+  provisioningProfile: electron-builder/comalibabaslobs.provisionprofile # 签名时使用的配置文件的路径，绝对或相对于应用程序根目录
+
+dmg:
+  artifactName: printer.dmg
+  # script: 'build/script/pkg-scripts.sh' // 相对于build（构建资源目录）的脚本目录 脚本必须是可执行的 ( chmod +x file)
+  # installLocation: /Applications # 安装位置 大多数情况下，您不需要更改此选项。如果选择本地系统域/Applications，将按预期将其安装到，或者 如果选择家庭安装，则将其安装到。/Applications$HOME/Applications
+  # welcome: # 欢迎文件的路径。这可用于自定义安装程序介绍页面上的文本。
+  # mustClose: 在安装包之前必须关闭的应用程序
+  icon: assets/icons/icon.icns # 默认为应用程序图标 ( build/icon.icns)
+  iconSize: 100
+  background: assets/icons/1024x1024.png
+  backgroundColor: #ffffff
+  iconTextSize: 12 # DMG 中所有图标文本的大小
+  title: 压缩图片 # 生成的 DMG 的标题，将在挂载时显示（卷名）
+  # mac 会有拖动图标安装的过程，这里配置图标的位置、大小、拖动的文件夹
+  contents:
+    - x: 130
+      y: 220
+      type: file
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+  format: UDZO # 磁盘映像格式
+  # 窗口位置和大小。y 坐标从下到上运行
+  window:
+    x: 400
+    y: 100
+    width: 540
+    height: 380
+  internetEnabled: false # 是否创建支持互联网的磁盘映像（使用浏览器下载时会自动解压缩映像，将应用程序放在桌面上，卸载并删除磁盘映像文件）
+  sign: false
+
+pkg:
+  # script: 'build/script/pkg-scripts.sh' // 相对于build（构建资源目录）的脚本目录 脚本必须是可执行的 ( chmod +x file)
+  # installLocation: /Applications # 安装位置 大多数情况下，您不需要更改此选项。如果选择本地系统域/Applications，将按预期将其安装到，或者 如果选择家庭安装，则将其安装到。/Applications$HOME/Applications
+  allowAnywhere: true # 是否可以安装在任何卷的根目录 false:不能安装在卷的根目录下
+  allowCurrentUserHome: true # 是否可以安装到当前用户的主目录。主目录安装是以当前用户（而不是 root）
+  allowRootDirectory: true # 是否可以安装到根目录。通常应该是true除非产品只能安装到用户的主目录。
+  background:
+    # "center" | "left" | "right" | "top" | "bottom" | "topleft" | "topright" | "bottomleft" | "bottomright"
+    alignment: center
+    file: assets/icons/1024x1024.png
+    # "tofit" | "none" | "proportional"
+    scaling: proportional
+  # welcome: # 欢迎文件的路径。这可用于自定义安装程序介绍页面上的文本。
+  # mustClose: 在安装包之前必须关闭的应用程序
+  conclusion: '自定义摘要' # 这可用于自定义安装程序最终“摘要”页面上的文本
+  isRelocatable: true # 用户重新安装，是否移动之前版本
+  isVersionChecked: true # 如果磁盘上有较新版本，则不安装
+  hasStrictIdentifier: true #  在安装路径中需要相同的包标识符
+  overwriteAction: upgrade # 如果您指定升级，则包中的捆绑包会自动替换磁盘上的任何版本 如果指定更新，包中的包会覆盖磁盘上的版本，包中不包含的任何文件都将保持原样
+
+# mas:
+# hardenedRuntime: true
+# entitlements: assets/entitlements.mac.plist # 用于签署应用程序的权利文件的路径。build/entitlements.mac.plist如果存在将使用
+# entitlementsInherit: assets/entitlements.mac.plist # 继承用于签署框架和分发包的安全设置的子权利的路径
+# binaries:  # 数组<字符串> | 未定义 - 需要签名的任何额外二进制文件的路径。
+linux:
+  target:
+    - AppImage
+  category: Development
+
+publish:
+  # 指定服务器类型，generic 通用服务器，也可以是 github 等
+  provider: github
+  owner: electron-react-boilerplate
+  repo: electron-react-boilerplate
+  # url: ''
+
+# 设置 electron 源
+# https://www.electron.build/configuration/configuration.html#configuration
+electronDownload:
+  mirror: http://npm.taobao.org/mirrors/electron/
