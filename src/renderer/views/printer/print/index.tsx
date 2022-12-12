@@ -6,11 +6,11 @@ import IpcMessageEvent = Electron.IpcMessageEvent
 import printLogo from '@/../assets/image/printer/logo.png'
 import { Button } from 'antd'
 
-// 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
-const ipcRenderer = window.require('electron').ipcRenderer
-const Store = window.require('electron-store')
-
 const Print = () => {
+  // 由于设置了 nodeintegration webpreferences 窗口不能使用 window.electron.ipcRenderer
+  const ipcRenderer = window.require('electron').ipcRenderer
+  const Store = window.require('electron-store')
+
   const store = new Store()
 
   const containerClass = `${styles['print']} ${'print' || ''}`

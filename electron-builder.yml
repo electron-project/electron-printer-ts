@@ -1,41 +1,12 @@
-# 相对于 json 语法 数组成员用
-#    a
-#     -b
-# 对象 层级的tab
-#    a
-#     b
-
 # electron-builder 打包配置文件
 
-# 安装后的应用名 如果未在build配置内部指定，则使用productName在顶层定义的属性package.json。如果未在 的顶层指定，package.json则使用name 属性。
+# 安装后的应用名 如果未在build配置内部指定，则使用productName在顶层定义的属性package.json。如果未在 的顶层指定，package.json则使用 name 属性。
 productName: 打印机
-# 版权
-copyright: Copyright © 2023 miniOcean404
-
+copyright: Copyright © 2023 miniOcean404 # 版权
+artifactName: '${productName}-${platform}-${arch}-${version}.${ext}' # 应用程序包名
 appId: com.davinci-print.app
 # "store" | "normal"| "maximum" store 可以显着减少构建时间。
 compression: store
-# 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
-files:
-  - dist
-  - node_modules
-  - package.json
-# 打包后拷贝静态文件到指定位置
-extraResources:
-  - from: ../../assets/**
-    to: ./extraResources/**
-# 打包后拷贝文件到指定位置
-extraFiles:
-  - from: ../../assets/**
-    to: ./extraFile/**
-# 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
-asar: false
-# 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
-asarUnpack: '**\*.{node,dll}'
-
-# url scheme 协议配置 针对 mac
-protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]
-
 #  添加控制变量
 #  打包线上应用，控制变量为 production，此设置会直接在打包的 package.json 中加入 "env" = "production" 这个变量，
 #  可以在文件中引用 const pjson = require('./package.json');  此时 pjson.env 等于 'production'
@@ -50,6 +21,28 @@ directories:
 # 在打包和签名之后（但在打包成可分发格式之前）运行的函数（或文件或模块 ID 的路径）
 afterSign: .erb/scripts/notarize.js
 
+# 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
+files:
+  - dist
+  - node_modules
+  - package.json
+# 打包后拷贝静态文件到指定位置
+extraResources:
+  - from: assets
+    to: ./extraResources
+# 打包后拷贝文件到指定位置
+extraFiles:
+  - from: assets
+    to: ./extraFiles
+
+# 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
+asar: false
+# 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
+asarUnpack: '**\*.{node,dll}'
+
+# url scheme 协议配置 针对 mac
+protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]
+
 # 所有平台：7z, zip, tar.xz, tar.lz, tar.gz, tar.bz2, dir（解压目录）。
 # ['msi', 'nsis']
 # nsis安装程序、
@@ -58,7 +51,7 @@ afterSign: .erb/scripts/notarize.js
 # AppX（Windows 商店）、
 # Squirrel.Windows
 win:
-  # 应用程序图标的路径。
+  # 应用程序图标的路径。256*256的ico格式或png格式文件
   icon: ./assets/icons/icon.ico
   # 商标和注册商标。
   legalTrademarks: Copyright © 2023 miniOcean404
@@ -70,6 +63,8 @@ win:
     #      arch:
     #        - x64 # 64位
     - target: portable
+      arch:
+        - x64
 
 nsis:
   oneClick: false # 是否一键安装
@@ -84,7 +79,6 @@ nsis:
   # uninstallerSidebar: # 仅限辅助安装程序。
   uninstallDisplayName: 打印机 # 控制面板中的卸载程序显示名称
   deleteAppDataOnUninstall: true # 仅限一键式安装程序。卸载时是否删除应用数据。
-  # artifactName: # 工件文件名模板。默认为${productName} Setup ${version}.${ext}.
 
   displayLanguageSelector: false # 是否显示语言选择对话框。不推荐（默认情况下将使用操作系统语言检测）
   # installerLanguages #  安装程序语言（例如en_US，de_DE)
@@ -105,7 +99,7 @@ publish:
   provider: github
   owner: electron-react-boilerplate
   repo: electron-react-boilerplate
-  # url: ''
+  # url: '' # electron应用的更新地址
 
 # 设置 electron 源
 # https://www.electron.build/configuration/configuration.html#configuration
