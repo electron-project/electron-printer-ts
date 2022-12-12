@@ -20,13 +20,17 @@ directories:
 # 在打包和签名之后（但在打包成可分发格式之前）运行的函数（或文件或模块 ID 的路径）
 afterSign: .erb/scripts/notarize.js
 
-# 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处
+# 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处,只能是文件夹,必须有 dist
+# 相对于 release/app 目录下，但是每次打包 build 目录都会消失，所以这个目录下什么东西都没有
+# 输出目录为 electron/build/win-unpacked/resources/app
 files:
   - dist
-  - '**/node_modules' # 如果想打包 node_modules 必须在 release/app/package.json 中填写依赖，并运行 postinstall 命令，这里的填写没有用
-  - package.json
+  # 这样可以 打包 node_nodules 依赖，为什么不能直接放入 ./app，因为打包会默认寻找 release/app/node_modules 并且复制过来
+  # 但是这种复制的情况需要运行 electron-builder install-app-deps
+  - from: '../../node_modules'
+    to: '../test'
 
-# 打包后拷贝静态文件到指定位置 文件起始位置是 项目根目录
+# 打包后拷贝静态文件到指定位置 文件起始位置是 相对于项目根目录
 extraResources:
   - from: assets
     to: ./assets
@@ -35,7 +39,7 @@ extraResources:
   - from: assets/webview
     to: ./app/webview
 
-# 打包后拷贝文件到指定位置
+# 打包后拷贝文件到指定位置 一般是 dll 文件 相对于项目根目录
 extraFiles:
   - from: assets
     to: ./extraFile
