@@ -1,7 +1,5 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
-import { isDev } from '@/constant/env'
-import installExtensions from '@/main/utils/plugin/extensions'
 import AppUpdater from '@/main/utils/plugin/auto-update'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { assetsPath } from '@/constant/icon'
@@ -28,12 +26,6 @@ export const createMainWindow = async () => {
       preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
     },
   })
-
-  // objc[85955]: Class WebSwapCGLLayer is implemented in both xxxxx One of the two will be used. Which one is undefined.
-  // Failed to fetch extension, trying 4 more times
-  // 是因为安装开发者工具 没有外网
-  // 必须在 loadURL 之前进行安装
-  // if (isDev) await installExtensions();
 
   initEvent()
   await initElectronRemote()
