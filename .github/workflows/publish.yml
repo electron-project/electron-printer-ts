@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   publish:
@@ -17,7 +17,7 @@ jobs:
       - name: 从仓库拉取
         uses: actions/checkout@v3
 
-      - name: 安装 Node and NPM
+      - name: 安装 Node 和 NPM
         uses: actions/setup-node@v3
         with:
           node-version: 16
