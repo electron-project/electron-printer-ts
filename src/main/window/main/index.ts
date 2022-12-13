@@ -57,14 +57,7 @@ export const createMainWindow = async () => {
 }
 
 export function closeMainWindow(option: { force: boolean; hidden?: boolean } = { force: false }) {
-  if (option.force) {
-    mainWindow = null
-    return
-  }
-
-  if (option.hidden) {
-    mainWindow?.close()
-  }
+  mainWindow = null
 }
 
 export const getMainWindow = () => mainWindow

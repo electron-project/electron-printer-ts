@@ -1,9 +1,10 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { assetsPath } from '@/constant/icon'
-import initPrint from '@/main/ipc/print'
-import path from 'path';
-import process from 'process';
+import path from 'path'
+import process from 'process'
+import { initPrintSettingEvent } from '@/main/window/print-setting/event'
+import initPrintIPC from '@/main/ipc/print'
 
 let printSetting: BrowserWindow | null
 
@@ -18,10 +19,14 @@ export async function createPrintSetting() {
     },
   })
 
-  await initPrint()
+  initPrintSettingEvent()
+  await initPrintIPC()
 
   await printSetting.loadURL(resolveHtmlPath('index.html', 'printer-layout/setting'))
   printSetting.show()
 }
 
 export const getPrintSetting = () => printSetting
+export const closePrintSetting = () => {
+  printSetting = null
+}
