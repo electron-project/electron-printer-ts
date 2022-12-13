@@ -1,19 +1,17 @@
-
 import styles from './index.module.scss'
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'
 
-const ScreenshotLayout = ({className}:any) => {
+const ScreenshotLayout = ({ className }: any) => {
   const containerClass = `${styles['screenshot-layout']} ${className || ''}`
-    return (
-        <div className={containerClass}>
-          <Outlet />
-        </div>
-    );
-};
+  return (
+    <div className={containerClass}>
+      <Outlet />
+    </div>
+  )
+}
 
 ScreenshotLayout.defaultProps = {
-    className:'',
+  className: '',
+}
 
-};
-
-export default ScreenshotLayout;
+export default ScreenshotLayout

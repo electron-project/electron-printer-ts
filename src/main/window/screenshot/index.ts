@@ -3,44 +3,76 @@ import { getSize } from '@/main/utils/size'
 import { app, BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import process from 'process'
+import platform from '@/constant/platform'
+import { screen } from 'electron'
 
-let cutWindow: BrowserWindow | null
+let cutWindows: BrowserWindow[] = []
 
-export async function createScreenShotWindow() {
-  if (cutWindow) return
+export async function createScreenShotWindows() {
+  const displays = screen.getAllDisplays() // 返回可用窗口数组
 
-  const { width, height } = getSize()
-  cutWindow = new BrowserWindow({
-    width,
-    height,
-    autoHideMenuBar: true,
-    useContentSize: true,
-    movable: false,
-    frame: false,
-    resizable: false,
-    hasShadow: false,
-    transparent: true,
-    fullscreenable: true,
-    fullscreen: true,
-    simpleFullscreen: true,
-    alwaysOnTop: false,
-    webPreferences: {
-      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
-    },
+  cutWindows = displays.map((display) => {
+    const cutWindow = new BrowserWindow({
+      width: display.bounds.width,
+      height: display.bounds.height,
+
+      // window 使用 fullscreen,  mac 设置为 undefined, 不可为 false
+      fullscreen: platform.isWindows || undefined, // win
+      // fullscreenable: true,
+      // simpleFullscreen: true,
+
+      x: display.bounds.x,
+      y: display.bounds.y,
+      transparent: true,
+      frame: false, // 会导致不触发事件
+      skipTaskbar: true,
+      autoHideMenuBar: true,
+      movable: false,
+      resizable: false,
+      enableLargerThanScreen: true, // mac
+      hasShadow: false,
+
+      useContentSize: true,
+      alwaysOnTop: true,
+
+      webPreferences: {
+        preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
+      },
+    })
+
+    let { x, y } = screen.getCursorScreenPoint() // 获取鼠标绝对位置
+    if (
+      x >= display.bounds.x &&
+      x <= display.bounds.x + display.bounds.width &&
+      y >= display.bounds.y &&
+      y <= display.bounds.y + display.bounds.height
+    ) {
+      cutWindow.focus()
+    } else {
+      cutWindow.blur()
+    }
+
+    cutWindow.setAlwaysOnTop(true, 'screen-saver') // mac
+    cutWindow.setVisibleOnAllWorkspaces(true) // mac 设置窗口是否应在所有工作区中可见
+    cutWindow.setFullScreenable(true) // mac 设置最大化/缩放窗口按钮是切换全屏模式还是最大化窗口
+
+    cutWindow.maximize()
+    cutWindow.setFullScreen(true)
+
+    cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-layout/virtual')).then()
+
+    cutWindow.on('close', () => {
+      let index = cutWindows?.indexOf(cutWindow)
+      if (index !== -1) {
+        cutWindows?.splice(index, 1)
+      }
+
+      cutWindows = []
+      // cutWindows?.forEach((win: BrowserWindow) => win.close())
+    })
+
+    return cutWindow
   })
-
-  await cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-layout/use'))
-
-  cutWindow.maximize()
-  cutWindow.setFullScreen(true)
 }
 
-export function closeScreenShotWindow(option={force:false}) {
-  cutWindow?.close()
-
-  if (option.force){
-    cutWindow = null
-  }
-}
-
-export const getScreenShotWindow = () => cutWindow
+export const getScreenShotWindows = () => cutWindows

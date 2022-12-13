@@ -1,7 +1,8 @@
 // https://juejin.cn/post/7111115472182968327#heading-6
 import styles from './index.module.scss'
-import { useEffect, useRef, useState } from 'react'
-import Konva from 'konva'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
+import Konva from 'konva' // 文档：http://konvajs-doc.bluehymn.com/
+import * as url from 'url'
 
 const VirtualScreenshot = ({ className }: any) => {
   const ipcRenderer = window.electron.ipcRenderer
@@ -12,16 +13,21 @@ const VirtualScreenshot = ({ className }: any) => {
 
   useEffect(() => {
     ipcRenderer.send('SHOW_CUT_SCREEN', { a: 1 })
-    // ipcRenderer.off('SHOW_CUT_SCREEN', getSource)
-    ipcRenderer.on('GET_SCREEN_IMAGE', getSource)
+    ipcRenderer.once('GET_SCREEN_IMAGE', getSource)
   }, [])
 
-  async function getSource(source: any) {
-    const { thumbnail } = source
-    setBg(await thumbnail.toDataURL())
+  async function getSource(url: any) {
+    setBg(url)
 
-    console.log(source)
     render() // 绘制渲染canvas舞台等任务
+  }
+
+  const layerRef = useRef<any>(null)
+  let rect: any
+
+  function render() {
+    const stage = createStage()
+    layerRef.current = createLayer(stage)
   }
 
   function createStage() {
@@ -32,9 +38,6 @@ const VirtualScreenshot = ({ className }: any) => {
     })
   }
 
-  const layerRef = useRef<any>(null)
-  let rect: any, transformer: any
-
   function createLayer(stage: any) {
     let layer = new Konva.Layer()
     stage.add(layer)
@@ -42,53 +45,10 @@ const VirtualScreenshot = ({ className }: any) => {
     return layer
   }
 
-  function render() {
-    const stage = createStage()
-    layerRef.current = createLayer(stage)
-  }
-
-  const isDown = useRef<any>(false)
-  const rectOption = useRef<any>({})
-
-  function onMouseDown(e: any) {
-    if (rect || isDown.current) return
-    isDown.current = true
-    const { pageX, pageY } = e
-    rectOption.current.x = pageX || 0
-    rectOption.current.y = pageY || 0
-    rect = createRect(layerRef.current, pageX, pageY, 0, 0, 0.25, false)
-    rect?.draw()
-  }
-
-  function onMouseMove(e: any) {
-    if (!isDown.current) return
-
-    const { pageX, pageY } = e
-    let w = pageX - rectOption.current.x
-    let h = pageY - rectOption.current.y
-    rect?.remove()
-    rect = createRect(layerRef.current, rectOption.current.x, rectOption.current.y, w, h, 0.25, false)
-    rect.draw()
-  }
-
-  function onMouseUp(e: any) {
-    if (!isDown.current) return
-    isDown.current = false
-    const { pageX, pageY } = e
-    let w = pageX - rectOption.current.x
-    let h = pageY - rectOption.current.y
-    rect?.remove()
-    rect = createRect(layerRef.current, rectOption.current.x, rectOption.current.y, w, h, 0, true)
-    rect.draw()
-
-    // todo transformer = createTransformer(rect)
-  }
-
+  // 创建绘画的矩形
   function createRect(layer: any, x: any, y: any, w = 0, h = 0, opacity = 0, draggable = false) {
-    // const { clientWidth, clientHeight } = containerRef.current
-
-    const width = w,
-      height = h
+    const width = w
+    const height = h
 
     let rect = new Konva.Rect({
       x,
@@ -104,18 +64,56 @@ const VirtualScreenshot = ({ className }: any) => {
     return rect
   }
 
-  // 根据区域生成图片
-  async function getCutImage(info: any) {
-    const { x, y, width, height } = info
-    let img = new Image()
-    img.src = bg
-    let canvas = document.createElement('canvas')
-    let ctx: any = canvas.getContext('2d')
-    canvas.width = ctx.width = width
-    canvas.height = ctx.height = height
-    ctx.drawImage(img, -x, -y, window.innerWidth, window.innerHeight)
-    return canvas.toDataURL('image/png')
+  const isDown = useRef<any>(false)
+  const rectOption = useRef<any>({})
+
+  function onMouseDown(e: MouseEvent) {
+    if (rect || isDown.current) return
+    isDown.current = true
+
+    const { pageX, pageY } = e
+    rectOption.current.x = pageX || 0
+    rectOption.current.y = pageY || 0
+    // 创建矩形
+    rect = createRect(layerRef.current, pageX, pageY, 0, 0, 0.25, false)
+
+    rect?.draw()
   }
+
+  function onMouseMove(e: MouseEvent) {
+    if (!isDown.current) return
+
+    const { pageX, pageY } = e
+    let w = pageX - rectOption.current.x
+    let h = pageY - rectOption.current.y
+    rect?.remove()
+
+    // 移动矩形
+    rect = createRect(layerRef.current, rectOption.current.x, rectOption.current.y, w, h, 0.25, false)
+
+    rect.draw()
+  }
+
+  function onMouseUp(e: MouseEvent) {
+    if (!isDown.current) return
+    isDown.current = false
+
+    const { pageX, pageY } = e
+    let w = pageX - rectOption.current.x
+    let h = pageY - rectOption.current.y
+    rect?.remove()
+
+    rect = createRect(layerRef.current, rectOption.current.x, rectOption.current.y, w, h, 0, true)
+
+    rect.draw()
+
+    // 调节尺寸的功能
+    // todo transformer = createTransformer(rect)
+
+    handleCut()
+  }
+
+  const [img, setImg] = useState('')
 
   // 确认截图方法
   async function handleCut() {
@@ -128,25 +126,40 @@ const VirtualScreenshot = ({ className }: any) => {
       width: Math.abs(width) * scaleX,
       height: Math.abs(height) * scaleY,
     })
-    // 目的是发给主窗体页面让其接收到这个图片
-    ipcRenderer.send('CUT_SCREEN', pic)
+
+    setImg(pic)
   }
 
-  // 直接退出截屏
-  function closeCut() {
-    ipcRenderer.send('CLOSE_CUT_SCREEN')
+  // 根据区域生成图片
+  async function getCutImage(info: any) {
+    const { x, y, width, height } = info
+    let img = new Image()
+    img.src = bg
+
+    let canvas = document.createElement('canvas')
+    let ctx: CanvasRenderingContext2D | null = canvas.getContext('2d')
+
+    if (ctx) {
+      canvas.width = ctx.canvas.width = width
+      canvas.height = ctx.canvas.height = height
+    }
+
+    ctx?.drawImage(img, -x, -y, window.innerWidth, window.innerHeight)
+    return canvas.toDataURL('image/png')
   }
 
   return (
     <div className={containerClass}>
       <div
         className={styles.container}
-        style={{ backgroundImage: ` + ${bg} + ` }}
+        style={{ backgroundImage: `url(${bg})` }}
         ref={containerRef}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
       ></div>
+
+      <img src={img} alt="" />
     </div>
   )
 }

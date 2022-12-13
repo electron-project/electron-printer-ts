@@ -5,6 +5,7 @@ import Platform from '@/constant/platform'
 import '@/main/ipc/index'
 import { createPrintSetting } from '@/main/window/print-setting'
 import { initStore } from '@/main/utils/store'
+import { regGlobalShortcut } from '@/main/window/app/global-shortcut'
 
 // 当Electron完成时，该方法将被调用
 // 初始化并准备创建浏览器窗口。
@@ -17,6 +18,8 @@ app
     // createMainWindow().then()
     createPrintWindow().then()
     // createPrintSetting().then()
+
+    regGlobalShortcut()
   })
   .catch(console.log)
 

@@ -9,7 +9,6 @@ import { initEvent } from '@/main/window/main/event'
 import initTray from '@/main/window/main/tray'
 import createMenu from '@/main/window/main/menu'
 import initElectronRemote from '@/main/window/main/electron-remote'
-import { regGlobalShortcut } from '@/main/window/main/global-shortcut'
 import * as process from 'process'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import initPrint from '@/main/ipc/print'
@@ -41,7 +40,6 @@ export const createMainWindow = async () => {
 
   initTray()
   createMenu()
-  regGlobalShortcut()
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
