@@ -67,12 +67,12 @@ win:
   # squirrel, 7z, zip, tar.xz, tar.lz, tar.gz, tar.bz2,dir
   # AppX 包只能在 Windows 10 上构建
   target:
-    #    - target: nsis
-    #      arch:
-    #        - x64 # 64位
-    - target: portable
+    - target: nsis
       arch:
-        - x64
+        - x64 # 64位
+#    - target: portable
+#      arch:
+#        - x64
 
 nsis:
   oneClick: false # 是否一键安装
