@@ -14,9 +14,10 @@ const Print = () => {
   const process = window.require('process')
   const path = window.require('path')
 
+  console.log(path.resolve(process.cwd(), 'assets/html/print/index.html'))
   const webviewHtml =
     process.env.NODE_ENV === 'development'
-      ? path.join(process.cwd(), 'assets/html/print/index.html')
+      ? path.resolve(process.cwd(), 'assets/webview/print/index.html')
       : path.resolve(process.resourcesPath, 'app/webview/print/index.html')
 
   const store = new Store()
