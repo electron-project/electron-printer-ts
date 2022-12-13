@@ -68,11 +68,15 @@ const Print = () => {
           printBackground: false,
           deviceName, // 打印机的名称
           color: true, // 设置打印机是彩色还是灰色
-          // margins: {
-          //   marginType: 'default', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
-          // },
-          // landscape: false, // 网页是否应以横向模式打印
-          // scaleFactor: 1, // 网页的比例
+          margins: {
+            marginType: 'custom', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
+            top: 20,
+            left: 20,
+            bottom: 0,
+            right: 0
+          },
+          landscape: true, // 网页是否应以横向模式打印
+          // scaleFactor: 0.2, // 网页的比例
           // pagesPerSheet: undefined, // 每页要打印的页数
           // collate: undefined, // 网页是否应该对比
           // // 要打印的页面范围
