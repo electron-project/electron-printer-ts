@@ -34,6 +34,7 @@ const VirtualScreenshot = ({ className }: any) => {
     layerRef.current = createLayer(stage)
   }
 
+  // 清楚程度可以设置 scale 来尝试调整
   function createStage() {
     return new Konva.Stage({
       container: containerRef.current || '',
@@ -122,6 +123,7 @@ const VirtualScreenshot = ({ className }: any) => {
     const { width, height, x, y, scaleX = 1, scaleY = 1 } = rect.attrs
     let _x = width > 0 ? x : x + width * scaleX
     let _y = height > 0 ? y : y + height * scaleY
+
     let pic = await getCutImage({
       x: _x,
       y: _y,
@@ -138,6 +140,7 @@ const VirtualScreenshot = ({ className }: any) => {
   // 根据区域生成图片
   async function getCutImage(info: any) {
     const { x, y, width, height } = info
+    console.log(info)
     let img = new Image()
     img.src = bg
 

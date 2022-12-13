@@ -1,5 +1,4 @@
 import path from 'path'
-import { getSize } from '@/main/utils/size'
 import { app, BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import process from 'process'

@@ -9,7 +9,6 @@ ipcMain.on('SHOW_CUT_SCREEN', async (event) => {
       types: ['screen'],
       thumbnailSize: getSize(),
     })
-
     event.reply('GET_SCREEN_IMAGE', sources[0].thumbnail.toDataURL())
   } catch (e) {
     console.log(e)
