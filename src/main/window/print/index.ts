@@ -27,6 +27,7 @@ export async function createPrintWindow() {
   await initPrintIPC()
 
   await printWindow.loadURL(resolveHtmlPath('index.html', 'printer-layout/print'))
+
   printWindow.show()
 }
 

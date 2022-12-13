@@ -55,7 +55,7 @@ const VirtualScreenshot = ({ className }: any) => {
       y,
       width,
       height,
-      fill: `rgba(255,0,0,${opacity})`,
+      fill: `rgba(0,113,117,${opacity})`,
       name: 'rect',
       draggable,
     })

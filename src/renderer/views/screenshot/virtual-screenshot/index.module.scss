@@ -1,4 +1,7 @@
 .virtual-screenshot {
+  -webkit-app-region: no-drag; // frame 开启时添加这个 css 才能触发点击事件
+  -webkit-user-select: none;
+
   width: inherit;
   height: inherit;
 

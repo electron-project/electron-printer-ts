@@ -24,7 +24,7 @@ export async function createScreenShotWindows() {
       x: display.bounds.x,
       y: display.bounds.y,
       transparent: true,
-      frame: false, // 会导致不触发事件
+      frame: false, // frame 开启时添加这个 -webkit-app-region: no-drag; 才能触发点击事件
       skipTaskbar: true,
       autoHideMenuBar: true,
       movable: false,
@@ -59,7 +59,9 @@ export async function createScreenShotWindows() {
     cutWindow.maximize()
     cutWindow.setFullScreen(true)
 
-    cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-layout/virtual')).then()
+    cutWindow.loadURL(resolveHtmlPath('index.html', 'screenshot-layout/virtual')).then(() => {
+      cutWindow.webContents.closeDevTools() // 想要关闭需要等待 loadURL 函数执行完毕
+    })
 
     cutWindow.on('close', () => {
       let index = cutWindows?.indexOf(cutWindow)
