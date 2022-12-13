@@ -174,11 +174,9 @@ const configuration: webpack.Configuration = {
     static: {
       publicPath: '/',
     },
-    historyApiFallback: {
-      verbose: true,
-    },
+    historyApiFallback: true,
     setupMiddlewares(middlewares) {
-      console.log('Starting preload.js builder...')
+      console.log('开始渲染进程构建...')
       const preloadProcess = spawn('npm', ['run', 'start:preload'], {
         shell: true,
         stdio: 'inherit',
@@ -186,7 +184,7 @@ const configuration: webpack.Configuration = {
         .on('close', (code: number) => process.exit(code!))
         .on('error', (spawnError) => console.error(spawnError))
 
-      console.log('Starting Main Process...')
+      console.log('开始主进程...')
       let args = ['run', 'start:main']
       if (process.env.MAIN_ARGS) {
         args = args.concat(['--', ...process.env.MAIN_ARGS.matchAll(/"[^"]+"|[^\s"]+/g)].flat())

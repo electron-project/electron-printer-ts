@@ -10,6 +10,7 @@ export function resolveHtmlPath(htmlFileName: string, hash?: string) {
     return url.href
   }
 
+  // + `/${hash}`
   // xx.loadFile(path.join(__dirname, '../dist/index.html'), {
   //   hash: 'xx',
   // })

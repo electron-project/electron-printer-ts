@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import './css/base.scss'
-import {  HashRouter } from 'react-router-dom'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)

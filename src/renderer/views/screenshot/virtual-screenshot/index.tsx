@@ -1,8 +1,12 @@
-// https://juejin.cn/post/7111115472182968327#heading-6
+// vue版本：https://juejin.cn/post/7111115472182968327#heading-6
+// html版本：https://github.com/chrisbing/electorn-capture-screen
+
 import styles from './index.module.scss'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import Konva from 'konva' // 文档：http://konvajs-doc.bluehymn.com/
-import * as url from 'url'
+
+// 暂未设置 mp3 loader
+const captureAudio = new Audio()
 
 const VirtualScreenshot = ({ className }: any) => {
   const ipcRenderer = window.electron.ipcRenderer
@@ -12,7 +16,7 @@ const VirtualScreenshot = ({ className }: any) => {
   const containerRef = useRef<any>(null)
 
   useEffect(() => {
-    ipcRenderer.send('SHOW_CUT_SCREEN', { a: 1 })
+    ipcRenderer.send('SHOW_CUT_SCREEN')
     ipcRenderer.once('GET_SCREEN_IMAGE', getSource)
   }, [])
 
@@ -113,8 +117,6 @@ const VirtualScreenshot = ({ className }: any) => {
     handleCut()
   }
 
-  const [img, setImg] = useState('')
-
   // 确认截图方法
   async function handleCut() {
     const { width, height, x, y, scaleX = 1, scaleY = 1 } = rect.attrs
@@ -127,7 +129,10 @@ const VirtualScreenshot = ({ className }: any) => {
       height: Math.abs(height) * scaleY,
     })
 
-    setImg(pic)
+    ipcRenderer.send('SCREENSHOT_IMAGE', pic)
+
+    // await captureAudio.play()
+    // captureAudio.onended = () => {}
   }
 
   // 根据区域生成图片
@@ -158,8 +163,6 @@ const VirtualScreenshot = ({ className }: any) => {
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
       ></div>
-
-      <img src={img} alt="" />
     </div>
   )
 }

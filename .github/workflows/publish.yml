@@ -23,7 +23,7 @@ jobs:
           node-version: 16
           cache: npm
 
-      - name: 安装 and build
+      - name: 安装依赖和打包
         run: |
           npm install
           npm run postinstall
