@@ -6,17 +6,24 @@ window.addEventListener('DOMContentLoaded', () => {
     qrcode.toDataURL(data.link || '', { margin: 0 }, function (error, url) {
       const qr = document.getElementById('qrcode')
       qr.setAttribute('src', url)
+      const name = document.querySelector('.name')
+      name.innerHTML = name.innerHTML.replace('{{name}}', data.name || '')
+  
+      const code = document.querySelector('.code')
+      code.innerHTML = code.innerHTML.replace('{{code}}', data.code || '')
+  
+      const category = document.querySelector('.category')
+      category.innerHTML = category.innerHTML.replace('{{category}}', data.categoryName || '')
+  
+      ipcRenderer.sendToHost('WEBVIEW_START_PRINT')
+
+      setTimeout(() => {
+        name.innerHTML = name.innerHTML.replace(data.name, '{{name}}' || '')
+        code.innerHTML = code.innerHTML.replace(data.code, '{{code}}' || '')
+        category.innerHTML = category.innerHTML.replace(data.categoryName, '{{category}}' || '')
+      }, 100)
+
     })
 
-    const name = document.querySelector('.name')
-    name.innerHTML = name.innerHTML.replace('{{name}}', data.name || '')
-
-    const code = document.querySelector('.code')
-    code.innerHTML = code.innerHTML.replace('{{code}}', data.code || '')
-
-    const category = document.querySelector('.category')
-    category.innerHTML = category.innerHTML.replace('{{category}}', data.categoryName || '')
-
-    ipcRenderer.sendToHost('WEBVIEW_START_PRINT')
   })
 })
