@@ -16,6 +16,13 @@ window.addEventListener('DOMContentLoaded', () => {
       category.innerHTML = category.innerHTML.replace('{{category}}', data.categoryName || '')
   
       ipcRenderer.sendToHost('WEBVIEW_START_PRINT')
+
+      setTimeout(() => {
+        name.innerHTML = name.innerHTML.replace(data.name, '{{name}}' || '')
+        code.innerHTML = code.innerHTML.replace(data.code, '{{code}}' || '')
+        category.innerHTML = category.innerHTML.replace(data.categoryName, '{{category}}' || '')
+      }, 100)
+
     })
 
   })

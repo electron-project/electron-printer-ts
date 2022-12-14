@@ -43,7 +43,7 @@ const Print = () => {
     })
 
     // deep link 进行打印
-    ipcRenderer.once('DEEP_LINK_PRINT_PARAMS', (event, params: unknown) => {
+    ipcRenderer.on('DEEP_LINK_PRINT_PARAMS', (event, params: unknown) => {
       webviewRef.current?.send('WEBVIEW_SET_HTML', params)
     })
   }
