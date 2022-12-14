@@ -13,15 +13,15 @@ export function regGlobalShortcut() {
     win?.webContents.toggleDevTools()
   })
 
-  globalShortcut.register('Esc', () => {
-    const cutWindows = getScreenShotWindows()
-
-    if (cutWindows) {
-      cutWindows.forEach((win) => win.close())
-    }
-  })
-
-  globalShortcut.register('CmdOrCtrl+Shift+A', createScreenShotWindows)
+  // globalShortcut.register('Esc', () => {
+  //   const cutWindows = getScreenShotWindows()
+  //
+  //   if (cutWindows) {
+  //     cutWindows.forEach((win) => win.close())
+  //   }
+  // })
+  //
+  // globalShortcut.register('CmdOrCtrl+Shift+A', createScreenShotWindows)
 }
 
 // 检测是否注册成功
