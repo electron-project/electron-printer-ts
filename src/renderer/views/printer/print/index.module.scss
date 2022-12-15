@@ -2,21 +2,21 @@
   width: inherit;
   height: inherit;
 
-  .container{
+  .container {
     width: 464px;
     height: 232px;
     display: flex;
     justify-content: center;
 
-    .center{
-      .img{
+    .center {
+      .img {
         display: block;
-        margin: 32px auto 16px ;
+        margin: 32px auto 16px;
         width: 68px;
         height: 68px;
       }
 
-      .tip{
+      .tip {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -25,25 +25,25 @@
         align-items: center;
         text-align: center;
 
-        color: #86909C;
+        color: #86909c;
 
         margin-bottom: 28px;
 
-        .weight{
+        .weight {
           font-weight: 700;
           color: black;
         }
       }
 
-      .button{
+      .button {
         display: block;
-        margin:auto;
+        margin: auto;
       }
     }
   }
 
-  .webview{
-    display:flex;
+  .webview {
+    display: none;
     width: inherit;
     height: inherit;
   }

@@ -11,8 +11,8 @@ let printSetting: BrowserWindow | null
 export async function createPrintSetting() {
   printSetting = new BrowserWindow({
     show: false, // 为了让初始化窗口显示无闪烁，先关闭显示，等待加载完成后再显示。
-    width: 1024,
-    height: 728,
+    width: 480,
+    height: 342,
     icon: assetsPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),

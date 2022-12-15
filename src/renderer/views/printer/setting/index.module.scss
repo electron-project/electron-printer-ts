@@ -1,15 +1,13 @@
-.print-setting{
-  width: 464px;
-  height: 232px;
-
-  .select{
+.print-setting {
+  padding-top: 30px;
+  .select {
     display: block;
-    margin:32px auto 0;
+    margin: auto;
     width: 400px;
     height: 32px;
   }
 
-  .button{
+  .button {
     display: block;
     margin: 32px auto 0;
   }
