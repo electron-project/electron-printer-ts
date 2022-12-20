@@ -1,13 +1,14 @@
 import { BrowserWindow, globalShortcut } from 'electron'
 
 export function regGlobalShortcut() {
-  globalShortcut.register('CmdOrCtrl + Shift + F', () => {
+  globalShortcut.register('CmdOrCtrl + Shift + I', () => {
     const win = BrowserWindow.getFocusedWindow()
-    win?.webContents.toggleDevTools()
-  })
 
-  globalShortcut.register('F12', () => {
-    const win = BrowserWindow.getFocusedWindow()
+    if (win?.webContents.isDevToolsOpened()) {
+      win?.unmaximize() // 取消窗口最大化
+    } else {
+      win?.maximize()
+    }
     win?.webContents.toggleDevTools()
   })
 
