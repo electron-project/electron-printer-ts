@@ -1,15 +1,13 @@
 import { BrowserWindow, globalShortcut } from 'electron'
-import { getMainWindow } from '@/main/window/main'
-import { createScreenShotWindows, getScreenShotWindows } from '@/main/window/screenshot'
 
 export function regGlobalShortcut() {
-  globalShortcut.register('CmdOrCtrl + e', async () => {
-    console.log('创建快捷键')
+  globalShortcut.register('CmdOrCtrl + Shift + F', () => {
+    const win = BrowserWindow.getFocusedWindow()
+    win?.webContents.toggleDevTools()
   })
 
   globalShortcut.register('F12', () => {
-    const win = getMainWindow()
-
+    const win = BrowserWindow.getFocusedWindow()
     win?.webContents.toggleDevTools()
   })
 

@@ -1,9 +1,8 @@
 import path from 'path'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, screen } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import process from 'process'
 import platform from '@/constant/platform'
-import { screen } from 'electron'
 
 let cutWindows: BrowserWindow[] = []
 

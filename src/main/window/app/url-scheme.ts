@@ -9,7 +9,6 @@ import { PROTOCOL } from '@/constant/url-scheme'
 import path from 'path'
 import * as process from 'process'
 import Platform from '@/constant/platform'
-import { getMainWindow } from '@/main/window/main'
 import { getPrintWindow } from '@/main/window/print'
 
 // 获取 app 锁，防止启动第二个实例
@@ -38,7 +37,8 @@ export function checkSchemeSetup() {
 export function registerLink() {
   // process.defaultApp 当应用程序启动时被作为参数传递给默认应用，这个属性在主进程中是 true，否则是undefined
   if (process.defaultApp && !app.isPackaged && process.argv.length >= 2) {
-    const devPath = 'C:\\Users\\h\\Desktop\\print-project\\electron-printer'
+    // const devPath = 'C:\\Users\\h\\Desktop\\print-project\\electron-printer'
+    const devPath = 'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer'
 
     //  将当前可执行文件的设置为协议(也就是 URI scheme) 的默认处理程序。 该方法允许你将应用更深入地集成到操作系统中。
     //  一旦注册了，所有 your-protocol:// 开头的链接将使用当前可执行文件打开。 整个链接，包括协议部分，将作为参数传递给你的应用程序。

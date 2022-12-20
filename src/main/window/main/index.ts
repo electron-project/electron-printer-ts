@@ -6,9 +6,8 @@ import { assetsPath } from '@/constant/icon'
 import { initEvent } from '@/main/window/main/event'
 import initTray from '@/main/window/main/tray'
 import createMenu from '@/main/window/main/menu'
-import initElectronRemote from '@/main/window/main/electron-remote'
+import initElectronRemote from '@/main/utils/plugin/electron-remote'
 import * as process from 'process'
-import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import initPrint from '@/main/ipc/print'
 import '@/main/window/app/url-scheme'
 
@@ -28,7 +27,7 @@ export const createMainWindow = async () => {
   })
 
   initEvent()
-  await initElectronRemote()
+  await initElectronRemote(mainWindow)
 
   initTray()
   createMenu()

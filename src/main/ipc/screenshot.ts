@@ -1,4 +1,4 @@
-import { ipcMain, desktopCapturer, clipboard, nativeImage, dialog } from 'electron'
+import { clipboard, desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { getSize } from '@/main/utils/size'
 import fs from 'fs'
 import { getScreenShotWindows } from '@/main/window/screenshot'

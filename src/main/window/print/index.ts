@@ -13,7 +13,7 @@ export async function createPrintWindow() {
     width: 480,
     height: 342,
     resizable: false,
-    icon: assetsPath('icon.png'),
+    icon: assetsPath('icons/icon.png'),
     webPreferences: {
       webviewTag: true, // 启用 webview 标签功能
       nodeIntegration: true,

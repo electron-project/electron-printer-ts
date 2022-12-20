@@ -1,5 +1,3 @@
-import { PrinterChannels } from '@/typings/channel'
-
 declare global {
   interface Window {
     electron: {

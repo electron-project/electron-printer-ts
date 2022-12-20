@@ -1,6 +1,6 @@
 import { assetsPath } from '@/constant/icon'
-import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
-import { getMainWindow } from '@/main/window/main/index';
+import { app, Menu, nativeImage, Tray } from 'electron'
+import { getMainWindow } from '@/main/window/main/index'
 
 const initTray = () => {
   const win = getMainWindow()

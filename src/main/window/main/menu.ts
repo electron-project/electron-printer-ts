@@ -1,13 +1,13 @@
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from 'electron'
 import { isDev } from '@/constant/env'
 import CurrentPlatform from '@/constant/platform'
-import { getMainWindow } from '@/main/window/main/index';
+import { getMainWindow } from '@/main/window/main/index'
 
-let win: BrowserWindow|null
+let win: BrowserWindow | null
 
 export default function createMenu() {
   win = getMainWindow()
-  if (!win )return
+  if (!win) return
 
   if (isDev) {
     setupDevelopmentEnvironment()
@@ -20,7 +20,6 @@ export default function createMenu() {
   // 设置为应用程序菜单
   Menu.setApplicationMenu(myMenu)
 }
-
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string
@@ -204,7 +203,6 @@ function buildDefaultTemplate() {
               // 添加快捷键
               accelerator: 'CmdOrCtrl + shift + i',
               click: () => {
-
                 if (!win) return
                 const { webContents } = win
                 webContents.toggleDevTools()
@@ -266,9 +264,8 @@ function setupDevelopmentEnvironment(): void {
       },
     ]
 
-    Menu.buildFromTemplate(popUpTemplate).popup({ window: win||undefined})
+    Menu.buildFromTemplate(popUpTemplate).popup({ window: win || undefined })
   })
 }
 
 const template = CurrentPlatform.isMac ? buildDefaultTemplate() : buildDarwinTemplate()
-

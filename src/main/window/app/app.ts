@@ -3,11 +3,9 @@ import { createMainWindow } from '@/main/window/main'
 import { createPrintWindow } from '@/main/window/print'
 import Platform from '@/constant/platform'
 import '@/main/ipc/index'
-import { createPrintSetting } from '@/main/window/print-setting'
 import { initStore } from '@/main/utils/store'
 import { regGlobalShortcut } from '@/main/window/app/global-shortcut'
-import { isDev } from '@/constant/env'
-import installExtensions from '@/main/utils/plugin/extensions'
+import initCommonIPC from '@/main/ipc/common'
 
 // 当Electron完成时，该方法将被调用
 // 初始化并准备创建浏览器窗口。
@@ -16,6 +14,7 @@ app
   .whenReady()
   .then(async () => {
     initStore()
+    initCommonIPC()
     // objc[85955]: Class WebSwapCGLLayer is implemented in both xxxxx One of the two will be used. Which one is undefined.
     // Failed to fetch extension, trying 4 more times
     // 是因为安装开发者工具 没有外网

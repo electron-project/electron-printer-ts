@@ -1,17 +1,17 @@
 import styles from './index.module.scss'
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'
 
-const MainLayout = ({className}:any) => {
+const MainLayout = ({ className }: any) => {
   const containerClass = `${styles['route-view-layout']} ${className || ''}`
-    return (
-        <div className={containerClass}>
-          <Outlet />
-        </div>
-    );
-};
+  return (
+    <div className={containerClass}>
+      <Outlet />
+    </div>
+  )
+}
 
 MainLayout.defaultProps = {
-    className:'',
-};
+  className: '',
+}
 
-export default MainLayout;
+export default MainLayout
