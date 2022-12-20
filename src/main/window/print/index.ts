@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, Menu } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { assetsPath } from '@/constant/icon'
 import initPrintIPC from '@/main/ipc/print'
@@ -12,6 +12,7 @@ export async function createPrintWindow() {
     show: false, // 为了让初始化窗口显示无闪烁，先关闭显示，等待加载完成后再显示。
     width: 480,
     height: 342,
+    resizable: false,
     icon: assetsPath('icon.png'),
     webPreferences: {
       webviewTag: true, // 启用 webview 标签功能
@@ -19,6 +20,7 @@ export async function createPrintWindow() {
       contextIsolation: false,
     },
   })
+  Menu.setApplicationMenu(null)
 
   registerLink()
   checkSchemeSetup()

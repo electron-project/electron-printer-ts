@@ -2,7 +2,7 @@ const ts_node = require('ts-node');
 const path = require('path');
 const old = process.cwd;
 
-const basePath = path.resolve('D:\\soft-dev\\code\\web\\frame\\React\\electron-printer')
+const basePath = path.resolve('C:\\Users\\h\\Desktop\\print-project\\electron-printer')
 
 process.cwd = () => {
   return basePath;

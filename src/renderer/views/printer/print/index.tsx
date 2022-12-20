@@ -69,13 +69,14 @@ const Print = () => {
           color: true, // 设置打印机是彩色还是灰色
           margins: {
             marginType: 'custom', // default、none、printableArea、custom。 如果选择自定义，您还需要指定顶部、底部、左侧和右侧
-            top: 20,
-            left: 20,
+            top: 10,
+            left: 10,
             bottom: 0,
             right: 0
           },
           landscape: true, // 网页是否应以横向模式打印
-          // scaleFactor: 0.2, // 网页的比例
+          // pageSize: { width: 155000, height: 36000 }, // height 最小 352
+          // scaleFactor: 0.2, // 网页的比例 
           // pagesPerSheet: undefined, // 每页要打印的页数
           // collate: undefined, // 网页是否应该对比
           // // 要打印的页面范围
@@ -83,14 +84,14 @@ const Print = () => {
           //   {
           //     from: 0, // 要打印的第一页的索引 0 开始
           //     to: 1, // 要打印的最后一页的索引 0 开始
-          //   },
+          //   }, 
           // ],
           // duplexMode: 'simplex', //simplex、shortEdge 或 longEdge。 设置打印网页的双面模式
           // dpi: undefined, //  {horizontal:x,vertical:x} 水平 dpi 垂直 dip
           // header: '', // 要作为页眉打印的字符串
           // footer: '', // 要作为页脚打印的字符串
           // pageSize: 'A4', // 指定打印文档的页面大小。可以是 A3、A4、A5、Legal、Letter、Tabloid 或包含以微米为单位的高度的对象
-        })
+        }) 
       }
     })
 
@@ -119,7 +120,7 @@ const Print = () => {
 
   return (
     <div className={containerClass}>
-      <div onClick={startPrint}>开始打印</div>
+      {/* <div onClick={startPrint}>开始打印</div> */}
 
       <div className={styles.container}>
         <div className={styles.center}>
