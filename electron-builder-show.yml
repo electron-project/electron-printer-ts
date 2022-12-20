@@ -1,5 +1,6 @@
 # electron-builder 打包配置文件
 
+# 版本在 release/app/package.json 下修改 version
 # 安装后的应用名 如果未在build配置内部指定，则使用productName在顶层定义的属性package.json。如果未在 的顶层指定，package.json则使用name 属性。
 productName: 打印机
 copyright: Copyright © 2023 miniOcean404 # 版权
