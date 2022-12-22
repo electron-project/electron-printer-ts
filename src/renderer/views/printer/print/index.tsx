@@ -16,7 +16,7 @@ const Print = () => {
 
   const webviewHtml =
     process.env.NODE_ENV === 'development'
-      ? path.resolve(process.cwd(), 'assets/webview/print/index.html')
+      ? path.resolve(process.cwd(), 'assets/copy/webview/print/index.html')
       : path.resolve(process.resourcesPath, 'app.asar/webview/print/index.html')
 
   const store = new Store()

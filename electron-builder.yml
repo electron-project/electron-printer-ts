@@ -6,7 +6,7 @@ copyright: Copyright © 2023 miniOcean404 # 版权
 artifactName: '${productName}-${platform}-${arch}-${version}.${ext}' # 应用程序包名
 appId: com.davinci-print.app
 # "store" | "normal"| "maximum" store 可以显着减少构建时间。
-compression: store
+compression: maximum
 #  添加控制变量
 #  打包线上应用，控制变量为 production，此设置会直接在打包的 package.json 中加入 "env" = "production" 这个变量，
 #  可以在文件中引用 const pkg = require('./package.json');  此时 pkg.env 等于 'production'
@@ -29,24 +29,20 @@ files:
   - dist
   - node_modules
   - package.json
-  - from: '../../assets/webview'
+  - from: './copy/webview'
     to: './webview'
 
 # 打包后拷贝静态文件到指定位置 文件起始位置是 相对于项目根目录
-# 直接指定到 resources/app 目录下，再 asar 打包时，不能打包进去
+# 直接指定到 resources 目录下，再 asar 打包时，不能打包进去
 extraResources:
   - from: assets
     to: ./assets
-    filter:
-      - '!webview' # 拷贝 assets 的文件夹不包括 webview 文件夹
-  - from: assets/webview
-    to: ./assets/webview
 
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
 asar: true
 # 相对于 app 目录的 glob 模式，它指定在创建 asar 存档时要排除的文件并放到 resources/app.asar.unpack 的文件夹
-#asarUnpack:
-#  - "./**/*.{node,dll}"
+asarUnpack:
+  - '**/*.{node,dll}'
 
 # url scheme 协议配置 针对 mac
 protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]

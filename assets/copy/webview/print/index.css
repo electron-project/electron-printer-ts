@@ -46,7 +46,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 170px;
-  margin-top: 16px
+  margin-top: 16px;
   /* min-width: 647px; */
 }
 
@@ -76,7 +76,6 @@ body {
   /* width: 400px; */
   /* height: 400px; */
   margin-left: 10px;
-
 }
 
 #container .right #qrcode {
@@ -84,7 +83,6 @@ body {
   height: 78px;
   background-color: black;
   display: block;
-
 }
 #container .right .logo {
   width: 78px;

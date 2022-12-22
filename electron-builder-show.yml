@@ -33,7 +33,7 @@ files:
     to: '../test'
 
 # 打包后拷贝静态文件到指定位置 文件起始位置是 相对于项目根目录
-# 直接指定到 resources/app 目录下，再 asar 打包时，不能打包进去
+# 直接指定到 resources 目录下，再 asar 打包时，不能打包进去
 extraResources:
   - from: assets
     to: ./assets

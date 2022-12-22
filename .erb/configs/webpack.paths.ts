@@ -5,6 +5,7 @@ const rootPath = path.join(__dirname, '../..');
 const dllPath = path.join(__dirname, '../dll');
 
 const srcPath = path.join(rootPath, 'src');
+const assetsPath = path.join(rootPath,'assets')
 const srcMainPath = path.join(srcPath, 'main');
 const srcRendererPath = path.join(srcPath, 'renderer');
 
@@ -24,6 +25,7 @@ export default {
   rootPath,
   dllPath,
   srcPath,
+  assetsPath,
   srcMainPath,
   srcRendererPath,
   releasePath,
