@@ -6,7 +6,7 @@ copyright: Copyright © 2023 miniOcean404 # 版权
 artifactName: '${productName}-${platform}-${arch}-${version}.${ext}' # 应用程序包名
 appId: com.davinci-print.app
 # "store" | "normal"| "maximum" store 可以显着减少构建时间。
-compression: maximum
+compression: store
 #  添加控制变量
 #  打包线上应用，控制变量为 production，此设置会直接在打包的 package.json 中加入 "env" = "production" 这个变量，
 #  可以在文件中引用 const pkg = require('./package.json');  此时 pkg.env 等于 'production'
@@ -15,7 +15,7 @@ extraMetadata:
 # 打包输入目录
 directories:
   app: release/app
-  buildResources: assets
+  buildResources: assets/install # 构建安装包协议等文件的资源地址
   output: release/build
 
 # 在打包和签名之后（但在打包成可分发格式之前）运行的函数（或文件或模块 ID 的路径）
@@ -24,27 +24,29 @@ afterSign: .erb/scripts/notarize.js
 # 除了 package.json 中 dependencies 外，另外需要打包的文件添加到此处,只能是文件夹,必须有 dist
 # 相对于 release/app 目录下，但是每次打包 build 目录都会消失，所以这个目录下什么东西都没有
 # 输出目录为 electron/build/win-unpacked/resources/app
+# files 才可以打包进 app 下
 files:
   - dist
+  - node_modules
+  - package.json
+  - from: '../../assets/webview'
+    to: './webview'
 
 # 打包后拷贝静态文件到指定位置 文件起始位置是 相对于项目根目录
+# 直接指定到 resources/app 目录下，再 asar 打包时，不能打包进去
 extraResources:
   - from: assets
     to: ./assets
     filter:
       - '!webview' # 拷贝 assets 的文件夹不包括 webview 文件夹
   - from: assets/webview
-    to: ./app/webview
-
-# 打包后拷贝文件到指定位置 一般是 dll 文件
-extraFiles:
-  - from: assets
-    to: ./extraFiles
+    to: ./assets/webview
 
 # 是否使用 Electron asar 的归档格式将应用程序的源代码打包到归档(asar)中
 asar: true
-# 与应用程序目录相关的全局模式，它指定在创建asar存档时要解压缩的文件。
-asarUnpack: '**\*.{node,dll}'
+# 相对于 app 目录的 glob 模式，它指定在创建 asar 存档时要排除的文件并放到 resources/app.asar.unpack 的文件夹
+#asarUnpack:
+#  - "./**/*.{node,dll}"
 
 # url scheme 协议配置 针对 mac
 protocols: [{ name: 'printapp', schemes: ['://'], role: 'Viewer' }]
@@ -86,8 +88,8 @@ nsis:
   uninstallDisplayName: 打印机 # 控制面板中的卸载程序显示名称
   deleteAppDataOnUninstall: true # 仅限一键式安装程序。卸载时是否删除应用数据。
 
-  displayLanguageSelector: false # 是否显示语言选择对话框。不推荐（默认情况下将使用操作系统语言检测）
-  # installerLanguages #  安装程序语言（例如en_US，de_DE)
+  displayLanguageSelector: false # 是否显示语言选择对话框。（默认情况下将使用操作系统语言检测，可用于配合自定义安装协议使用）
+  # installerLanguages: zh_CN #  安装器的语言（例如en_US，de_DE) 未知
   # multiLanguageInstallerBoolean # 是否创建多语言安装程序。默认为unicode选项值
   language: '2052' # 卸载后删除用户数据
   packElevateHelper: # 是否打包 elevate 可执行文件（如果使用每台机器的安装程序或将来可以使用，则需要电子更新程序）如果忽略 perMachine 则为true

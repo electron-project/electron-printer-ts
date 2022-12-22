@@ -17,7 +17,7 @@ const Print = () => {
   const webviewHtml =
     process.env.NODE_ENV === 'development'
       ? path.resolve(process.cwd(), 'assets/webview/print/index.html')
-      : path.resolve(process.resourcesPath, 'app/webview/print/index.html')
+      : path.resolve(process.resourcesPath, 'app.asar/webview/print/index.html')
 
   const store = new Store()
 
@@ -108,12 +108,7 @@ const Print = () => {
   }
 
   const startPrint = () => {
-    const data = {
-      batchNo: '1',
-      pn: '2',
-    }
-
-    webviewRef.current?.send('WEBVIEW_SET_HTML', data)
+    webviewRef.current?.send('WEBVIEW_SET_HTML', {})
   }
 
   const setting = () => {
