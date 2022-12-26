@@ -1,6 +1,7 @@
 import { BrowserWindow, globalShortcut } from 'electron'
 
 export function regGlobalShortcut() {
+  // globalShortcut.unregisterAll() 注销所有快捷键
   globalShortcut.register('CmdOrCtrl + Shift + I', () => {
     const win = BrowserWindow.getFocusedWindow()
 

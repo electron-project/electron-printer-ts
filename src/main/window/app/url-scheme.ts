@@ -10,6 +10,7 @@ import path from 'path'
 import * as process from 'process'
 import Platform from '@/constant/platform'
 import { getPrintWindow } from '@/main/window/print'
+import getProgramExecParams from '@/main/utils/get-exec-params'
 
 // 获取 app 锁，防止启动第二个实例
 //    获取失败则代表有实例已经运行了
@@ -37,23 +38,10 @@ export function checkSchemeSetup() {
 export function registerLink() {
   // process.defaultApp 当应用程序启动时被作为参数传递给默认应用，这个属性在主进程中是 true，否则是undefined
   if (process.defaultApp && !app.isPackaged && process.argv.length >= 2) {
-    // const devPath = 'C:\\Users\\h\\Desktop\\print-project\\electron-printer'
-    const devPath = 'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer'
-
     //  将当前可执行文件的设置为协议(也就是 URI scheme) 的默认处理程序。 该方法允许你将应用更深入地集成到操作系统中。
     //  一旦注册了，所有 your-protocol:// 开头的链接将使用当前可执行文件打开。 整个链接，包括协议部分，将作为参数传递给你的应用程序。
     // 后边两个参数是 windows 特有
-    app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, [
-      // 在开发阶段，我们是通过 electron . 或者 electron path/to/script.js 来启动的应用，
-      // 所以 正常 electron 版本(非魔改)的 process.argv[1] 是我们的脚本路径，传给系统时，这个参数也不能少
-      // 魔改的就是启动这个 electron main 进程的命令
-      '-r',
-      path.resolve(devPath, 'script/url-scheme-dev'),
-      path.resolve(devPath),
-
-      // 此处有一个安全漏洞，加一个 `--` 以确保后面的参数不被 Electron 处理，https://www.nsfocus.com.cn/html/2018/39_0125/732.html
-      '--',
-    ])
+    app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, getProgramExecParams())
   } else {
     app.setAsDefaultProtocolClient(PROTOCOL)
   }

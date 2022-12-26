@@ -43,3 +43,14 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+// 监控渲染进程错误
+app.on('render-process-gone', (event, webContents, details) => {
+  console.log(details.reason, details.exitCode)
+})
+
+// 监控子进程错误
+// electron-helper、electron-helper (GPU)
+app.on('child-process-gone', (event, details) => {
+  console.log(details.reason, details.exitCode, 2)
+})

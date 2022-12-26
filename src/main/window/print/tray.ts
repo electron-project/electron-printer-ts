@@ -1,9 +1,12 @@
 import { assetsPath } from '@/constant/icon'
 import { app, Menu, nativeImage, Tray } from 'electron'
-import { getMainWindow } from '@/main/window/main/index'
+import { getPrintWindow } from '@/main/window/print/index'
+import process from 'process'
+import getProgramExecParams from '@/main/utils/get-exec-params'
+import setProgramStart from '@/main/utils/boot-start'
 
-const initTray = () => {
-  const win = getMainWindow()
+const initPrintTray = () => {
+  const win = getPrintWindow()
   if (!win) return
 
   // Mac 只支持 16*16 大小
@@ -26,9 +29,14 @@ const initTray = () => {
       win.setSkipTaskbar(false)
     }
   })
+
   // 右键点击图标时，出现的菜单，通过Menu.buildFromTemplate定制，这里只包含退出程序的选项。
   tray.on('right-click', () => {
     const menuConfig = Menu.buildFromTemplate([
+      {
+        label: '自启动',
+        click: () => setProgramStart()
+      },
       {
         label: '打开开发者工具',
         click: () => win.webContents.toggleDevTools()
@@ -43,4 +51,4 @@ const initTray = () => {
   })
 }
 
-export default initTray
+export default initPrintTray

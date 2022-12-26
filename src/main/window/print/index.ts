@@ -4,6 +4,7 @@ import { assetsPath } from '@/constant/icon'
 import initPrintIPC from '@/main/ipc/print'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import { initPrintEvent } from '@/main/window/print/event'
+import initPrintTray from '@/main/window/print/tray'
 
 let printWindow: BrowserWindow | null
 
@@ -17,11 +18,14 @@ export async function createPrintWindow() {
     webPreferences: {
       webviewTag: true, // 启用 webview 标签功能
       nodeIntegration: true,
-      contextIsolation: false,
-    },
+      contextIsolation: false
+    }
   })
+
+  // 关闭菜单
   Menu.setApplicationMenu(null)
 
+  initPrintTray()
   registerLink()
   checkSchemeSetup()
   initPrintEvent()
