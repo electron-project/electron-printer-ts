@@ -1,5 +1,8 @@
 ## 安装程序协议配置
 
+https://zhuanlan.zhihu.com/p/466273067
+https://zhuanlan.zhihu.com/p/461247573
+
 ## 打包
 1. `electron-builder build -c electron-builder.yml --publish never` 命令默认打包平台是当前电脑的环境
 2. 指定当前环境打包其他环境添加命令 `electron-builder build -mwl -c electron-builder.yml --publish never`
