@@ -7,7 +7,7 @@ export default (imgPath: string, quality = 50) => {
 
   // 图片压缩质量，可选值：better || good || best
   const res = image.resize({
-    quality: 'best',
+    quality: 'best'
   })
 
   // const imageData = res.toPNG()

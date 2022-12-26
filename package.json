@@ -40,6 +40,7 @@
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
     "package": "ts-node ./.erb/scripts/clean.js dist && npm run copy-dir && npm run build && electron-builder build -c electron-builder.yml --publish never",
+    "package-all": "ts-node ./.erb/scripts/clean.js dist && npm run copy-dir && npm run build && electron-builder build -wl -c electron-builder.yml --publish never",
     "copy-dir": "ts-node ./.erb/scripts/copy-dir.js",
     "build-icon": "electron-icon-builder --input=./assets/image/printer/logo.png --output=./assets/ --flatten",
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",

@@ -1,6 +1,6 @@
-import { assetsPath } from '@/constant/icon'
 import { app } from 'electron'
 import path from 'path'
+import { ElectronPath } from '@/main/constant/path'
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions
 import WebPreferences = Electron.WebPreferences
 
@@ -41,7 +41,7 @@ const webPreferences: WebPreferences = {
     sansSerif: 'Arial', //  string (可选) - 默认值为 Arial
     monospace: 'Courier New', //  string (可选) - 默认值为 Courier New
     cursive: 'Script', //  string (可选) - 默认值为 Script
-    fantasy: 'Impact', //  string (可选) - 默认值为 Impact
+    fantasy: 'Impact' //  string (可选) - 默认值为 Impact
   },
 
   defaultFontSize: 16, //  Integer (可选) - 默认值为 16.
@@ -67,7 +67,7 @@ const webPreferences: WebPreferences = {
   enablePreferredSizeMode: false,
 
   // Mac 配置
-  scrollBounce: true, // 在 macOS 启用弹力动画 (橡皮筋) 效果。
+  scrollBounce: true // 在 macOS 启用弹力动画 (橡皮筋) 效果。
 
   // accessibleTitle: // - 仅提供给如屏幕读取器等辅助工具的替代标题字符串
   // enableBlinkFeatures: // string(可选) - 以逗号分隔的需要启用的特性列表，譬如CSSVariables,KeyboardEventKey 在 RuntimeEnabledFeatures.json5文件中查看被支持的所有特性.
@@ -91,7 +91,7 @@ const browserWindowProp: BrowserWindowConstructorOptions = {
   maximizable: true, // 窗口是否可最大化 默认为true Linux上未实现
   closable: true, // 窗口是否可关闭 默认为true Linux上未实现
 
-  icon: assetsPath('icon.png'), // 应用运行时的标题栏图标及 Windows 任务栏图标,默认使用可执行文件的图标.
+  icon: ElectronPath.icon, // 应用运行时的标题栏图标及 Windows 任务栏图标,默认使用可执行文件的图标.
   alwaysOnTop: false, // 窗口是否永远在别的窗口的上面。 默认值为 false.
   center: true, // 是否居中
   // x:0, 相对于屏幕左侧偏移量
@@ -143,6 +143,6 @@ const browserWindowProp: BrowserWindowConstructorOptions = {
   tabbingIdentifier: '图片压缩', // 选项组卡的名称，在macOS 10.12+上可使窗口在原生选项卡中打开. 具有相同标识符的窗口将被组合在一起。 这还会在窗口的标签栏中添加一个原生的新选项卡按钮, 并允许 app 和窗口接收 new-window-for-tab 事件。
   zoomToPageWidth: false, // 控制 macOS 上，当选择性单击工具栏上的绿色stoplight按钮或单击 Window > Zoom menu item时的行为。 如果为 true, 窗口将放大到网页的本身宽度, false 将使其缩放到屏幕的宽度。 这也会影响直接调用 maximize() 时的行为。
 
-  webPreferences,
+  webPreferences
 }
 export default browserWindowProp

@@ -5,10 +5,9 @@
 // Nsis 钩子详细说明：https://www.electron.build/configuration/nsis
 
 import { app, BrowserWindow } from 'electron'
-import { PROTOCOL } from '@/constant/url-scheme'
-import path from 'path'
+import { PROTOCOL } from '@/main/constant/url-scheme'
 import * as process from 'process'
-import Platform from '@/constant/platform'
+import Platform from '@/main/constant/platform'
 import { getPrintWindow } from '@/main/window/print'
 import getProgramExecParams from '@/main/utils/get-exec-params'
 

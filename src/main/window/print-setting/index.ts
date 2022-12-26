@@ -1,10 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
-import { assetsPath } from '@/constant/icon'
 import path from 'path'
 import process from 'process'
 import { initPrintSettingEvent } from '@/main/window/print-setting/event'
 import initPrintIPC from '@/main/ipc/print'
+import { ElectronPath } from '@/main/constant/path'
 
 let printSetting: BrowserWindow | null
 
@@ -13,10 +13,10 @@ export async function createPrintSetting() {
     show: false, // 为了让初始化窗口显示无闪烁，先关闭显示，等待加载完成后再显示。
     width: 480,
     height: 342,
-    icon: assetsPath('icon.png'),
+    icon: ElectronPath.icon,
     webPreferences: {
-      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
-    },
+      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js')
+    }
   })
 
   initPrintSettingEvent()

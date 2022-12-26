@@ -6,7 +6,6 @@ declare global {
         once(channel: string, func: (...args: unknown[]) => void): void
         send(channel: string, ...args: unknown[]): void
       }
-      assetsPath(func: (...args: unknown[]) => void): any
     }
   }
 }

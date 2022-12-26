@@ -1,4 +1,4 @@
-import { assetsPath } from '@/constant/icon'
+import { ElectronPath } from '@/main/constant/path'
 
 const toastXmlString = `
       <toast>
@@ -18,7 +18,7 @@ const toastXmlString = `
           <!--            </group>-->
 
           <binding template='ToastImageAndText01'>
-              <image id='1' src='${assetsPath('icons/icon.png')}' alt='img'/>
+              <image id='1' src='${ElectronPath.icon}' alt='img'/>
               <text id='1'>标签</text>
               <text placement='attribution'>打印机开始打印</text>
           </binding>

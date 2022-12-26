@@ -2,8 +2,7 @@ import { ipcMain, Notification } from 'electron'
 import { getPrintWindow } from '@/main/window/print'
 import { createPrintSetting, getPrintSetting } from '@/main/window/print-setting'
 import { getElectronStore } from '@/main/utils/store'
-import { assetsPath } from '@/constant/icon'
-import toastXmlString from '@/main/utils/notification-xml'
+import { ElectronPath } from '@/main/constant/path'
 
 const initPrintIPC = async () => {
   ipcMain.on('PRINTER_GET_LIST', async (event, args) => {
@@ -36,8 +35,8 @@ const initPrintIPC = async () => {
       title: '标签',
       body: '打印机开始打印',
       silent: false, // 是否静默通知
-      icon: assetsPath('icons/icon.png'),
-      timeoutType: 'default', // 通知持续时间
+      icon: ElectronPath.icon,
+      timeoutType: 'default' // 通知持续时间
 
       // toastXml: toastXmlString, // win
       // subtitle: '子标题', // mac

@@ -1,8 +1,8 @@
 import path from 'path'
+import process from 'process'
 
 const getProgramExecParams = () => {
-  // const devPath = 'C:\\Users\\h\\Desktop\\print-project\\electron-printer'
-  const devPath = 'D:\\soft-dev\\code\\web\\frame\\React\\electron-printer'
+  const devPath = process.cwd()
 
   return [
     // 在开发阶段，我们是通过 electron . 或者 electron path/to/script.js 来启动的应用，

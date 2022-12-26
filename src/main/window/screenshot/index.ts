@@ -2,7 +2,7 @@ import path from 'path'
 import { app, BrowserWindow, screen } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import process from 'process'
-import platform from '@/constant/platform'
+import platform from '@/main/constant/platform'
 
 let cutWindows: BrowserWindow[] = []
 
@@ -34,8 +34,8 @@ export async function createScreenShotWindows() {
       alwaysOnTop: true,
 
       webPreferences: {
-        preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
-      },
+        preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js')
+      }
     })
 
     let { x, y } = screen.getCursorScreenPoint() // 获取鼠标绝对位置

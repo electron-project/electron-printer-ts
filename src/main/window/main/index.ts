@@ -2,7 +2,6 @@ import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import AppUpdater from '@/main/utils/plugin/auto-update'
 import { resolveHtmlPath } from '@/main/utils/path'
-import { assetsPath } from '@/constant/icon'
 import { initEvent } from '@/main/window/main/event'
 import initTray from '@/main/window/main/tray'
 import createMenu from '@/main/window/main/menu'
@@ -10,6 +9,7 @@ import initElectronRemote from '@/main/utils/plugin/electron-remote'
 import * as process from 'process'
 import initPrint from '@/main/ipc/print'
 import '@/main/window/app/url-scheme'
+import { ElectronPath } from '@/main/constant/path'
 
 let mainWindow: BrowserWindow | null
 
@@ -20,10 +20,10 @@ export const createMainWindow = async () => {
     show: false, // 为了让初始化窗口显示无闪烁，先关闭显示，等待加载完成后再显示。
     width: 1024,
     height: 728,
-    icon: assetsPath('icon.png'),
+    icon: ElectronPath.icon,
     webPreferences: {
-      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
-    },
+      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js')
+    }
   })
 
   initEvent()

@@ -1,16 +1,14 @@
-import { assetsPath } from '@/constant/icon'
 import { app, Menu, nativeImage, Tray } from 'electron'
 import { getPrintWindow } from '@/main/window/print/index'
-import process from 'process'
-import getProgramExecParams from '@/main/utils/get-exec-params'
 import setProgramStart from '@/main/utils/boot-start'
+import { ElectronPath } from '@/main/constant/path'
 
 const initPrintTray = () => {
   const win = getPrintWindow()
   if (!win) return
 
   // Mac 只支持 16*16 大小
-  const icon = nativeImage.createFromPath(assetsPath('icons/16x16.png'))
+  const icon = nativeImage.createFromPath(ElectronPath.icon)
   const tray = new Tray(icon)
 
   // 鼠标移到托盘中应用程序的图标上时，显示的文本

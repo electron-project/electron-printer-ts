@@ -1,6 +1,5 @@
 import process from 'process'
 import { app } from 'electron'
-import getProgramExecParams from '@/main/utils/get-exec-params'
 import path from 'path'
 
 const setProgramStart = () => {

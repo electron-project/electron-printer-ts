@@ -1,10 +1,10 @@
 import { BrowserWindow, Menu } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
-import { assetsPath } from '@/constant/icon'
 import initPrintIPC from '@/main/ipc/print'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import { initPrintEvent } from '@/main/window/print/event'
 import initPrintTray from '@/main/window/print/tray'
+import { ElectronPath } from '@/main/constant/path'
 
 let printWindow: BrowserWindow | null
 
@@ -14,7 +14,7 @@ export async function createPrintWindow() {
     width: 480,
     height: 342,
     resizable: false,
-    icon: assetsPath('icons/icon.png'),
+    icon: ElectronPath.icon,
     webPreferences: {
       webviewTag: true, // 启用 webview 标签功能
       nodeIntegration: true,

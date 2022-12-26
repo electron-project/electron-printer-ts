@@ -1,8 +1,7 @@
 // 文章：https://juejin.cn/post/7054540026700365855
 // 文章：https://cloud.tencent.com/developer/article/2136456
 import { app, crashReporter } from 'electron'
-import process from 'process'
-import { GlobalPath } from '@/constant/path'
+import { ElectronPath } from '@/main/constant/path'
 
 // 本机（MacBook Pro）上 Electron 的路径：/usr/local/lib/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron
 // 本机 Electron 数据文件路径：/Users/bianchengsanmei/Library/Application Support/Electron
@@ -21,7 +20,7 @@ import { GlobalPath } from '@/constant/path'
 // Crash reason ,是导致崩溃的原因描述。
 
 export const initCrashReporter = () => {
-  app.setPath('crashDumps', process.cwd() + GlobalPath.log)
+  app.setPath('crashDumps', ElectronPath.log)
   console.log(app.getPath('crashDumps'))
   crashReporter.start({
     productName: '产品名字',
