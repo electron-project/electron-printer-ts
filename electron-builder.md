@@ -1,5 +1,13 @@
 ## 安装程序协议配置
 
+## 打包
+1. `electron-builder build -c electron-builder.yml --publish never` 命令默认打包平台是当前电脑的环境
+2. 指定当前环境打包其他环境添加命令 `electron-builder build -mwl -c electron-builder.yml --publish never`
+   m: mac w: win l:linux
+3. [如果你的应用程序有原生依赖，它只能在目标平台上编译，除非不使用预构建。](https://www.electron.build/multi-platform-build)
+   预构建是一种解决方案，但大多数节点模块不提供预构建的二进制文件。
+   macOS 代码签名仅适用于 macOS
+
 ### 默认协议
 
 1. 在 directories/buildResources 设置的目录下创建 license.txt 文件，并写下协议内容(这个是默认的协议)

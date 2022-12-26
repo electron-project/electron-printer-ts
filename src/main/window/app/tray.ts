@@ -1,14 +1,14 @@
-import { app, Menu, nativeImage, Tray } from 'electron'
-import { getPrintWindow } from '@/main/window/print/index'
+import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
+import { getPrintWindow } from '@/main/window/print'
 import setProgramStart from '@/main/utils/boot-start'
 import { ElectronPath } from '@/main/constant/path'
 
-const initPrintTray = () => {
+const initTray = () => {
   const win = getPrintWindow()
   if (!win) return
 
   // Mac 只支持 16*16 大小
-  const icon = nativeImage.createFromPath(ElectronPath.icon)
+  const icon = nativeImage.createFromPath(ElectronPath.icon16)
   const tray = new Tray(icon)
 
   // 鼠标移到托盘中应用程序的图标上时，显示的文本
@@ -41,7 +41,11 @@ const initPrintTray = () => {
       },
       {
         label: '退出',
-        click: () => app.quit()
+        click: () => {
+          const wins = BrowserWindow.getAllWindows()
+          wins.forEach((win) => win.destroy())
+          app.quit()
+        }
       }
     ])
 
@@ -49,4 +53,4 @@ const initPrintTray = () => {
   })
 }
 
-export default initPrintTray
+export default initTray

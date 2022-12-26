@@ -1,9 +1,9 @@
-import { BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import initPrintIPC from '@/main/ipc/print'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
 import { initPrintEvent } from '@/main/window/print/event'
-import initPrintTray from '@/main/window/print/tray'
+import initPrintTray from '@/main/window/app/tray'
 import { ElectronPath } from '@/main/constant/path'
 
 let printWindow: BrowserWindow | null
@@ -25,7 +25,6 @@ export async function createPrintWindow() {
   // 关闭菜单
   Menu.setApplicationMenu(null)
 
-  initPrintTray()
   registerLink()
   checkSchemeSetup()
   initPrintEvent()
@@ -37,8 +36,8 @@ export async function createPrintWindow() {
   printWindow.show()
 }
 
+export const getPrintWindow = () => printWindow
 export const closePrintWindow = () => {
+  printWindow?.destroy()
   printWindow = null
 }
-
-export const getPrintWindow = () => printWindow

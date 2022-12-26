@@ -3,7 +3,6 @@ import path from 'path'
 import AppUpdater from '@/main/utils/plugin/auto-update'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { initEvent } from '@/main/window/main/event'
-import initTray from '@/main/window/main/tray'
 import createMenu from '@/main/window/main/menu'
 import initElectronRemote from '@/main/utils/plugin/electron-remote'
 import * as process from 'process'
@@ -29,7 +28,6 @@ export const createMainWindow = async () => {
   initEvent()
   await initElectronRemote(mainWindow)
 
-  initTray()
   createMenu()
 
   // Remove this if your app does not use auto updates
