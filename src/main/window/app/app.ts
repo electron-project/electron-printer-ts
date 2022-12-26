@@ -6,6 +6,7 @@ import '@/main/ipc/index'
 import { initStore } from '@/main/utils/store'
 import { regGlobalShortcut } from '@/main/window/app/global-shortcut'
 import initCommonIPC from '@/main/ipc/common'
+import { json } from 'react-router-dom'
 
 // 当Electron完成时，该方法将被调用
 // 初始化并准备创建浏览器窗口。
@@ -44,13 +45,14 @@ app.on('window-all-closed', () => {
   }
 })
 
+// 通过 warn 给 crashReporter 记录日志
 // 监控渲染进程错误
 app.on('render-process-gone', (event, webContents, details) => {
-  console.log(details.reason, details.exitCode)
+  console.warn('app:renderer-process-crashed', event, JSON.stringify(webContents), JSON.stringify(details))
 })
 
 // 监控子进程错误
-// electron-helper、electron-helper (GPU)
+// electron-helper、electron-helper (GPU) 主进程
 app.on('child-process-gone', (event, details) => {
-  console.log(details.reason, details.exitCode, 2)
+  console.warn('app:child-process-gone', event, JSON.stringify(details))
 })

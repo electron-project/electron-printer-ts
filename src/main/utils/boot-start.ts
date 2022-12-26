@@ -11,7 +11,7 @@ const setProgramStart = () => {
   const exeName = path.basename(process.execPath)
 
   app.setLoginItemSettings({
-    openAtLogin: true, // true 登录时打开应用程序， false 将应用从登录启动项中删除
+    openAtLogin: !loginSetInfo.openAtLogin, // true 登录时打开应用程序， false 将应用从登录启动项中删除
     openAsHidden: false, // mac 以隐藏方式打开应用程序
     path: process.execPath,
     args: ['--processStart', `"${exeName}"`, '--process-start-args', `"--hidden"`],
