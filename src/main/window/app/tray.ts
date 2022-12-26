@@ -41,11 +41,7 @@ const initTray = () => {
       },
       {
         label: '退出',
-        click: () => {
-          const wins = BrowserWindow.getAllWindows()
-          wins.forEach((win) => win.destroy())
-          app.quit()
-        }
+        click: () => app.quit()
       }
     ])
 
