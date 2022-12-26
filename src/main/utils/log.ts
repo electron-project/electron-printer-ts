@@ -21,7 +21,7 @@ import { ElectronPath } from '@/main/constant/path'
 
 export const initCrashReporter = () => {
   app.setPath('crashDumps', ElectronPath.log)
-  console.log(app.getPath('crashDumps'))
+
   crashReporter.start({
     productName: '产品名字',
     uploadToServer: false,

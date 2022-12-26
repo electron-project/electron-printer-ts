@@ -49,11 +49,16 @@ app.on('window-all-closed', () => {
 // 通过 warn 给 crashReporter 记录日志
 // 监控渲染进程错误
 app.on('render-process-gone', (event, webContents, details) => {
-  console.warn('app:renderer-process-crashed', event, JSON.stringify(webContents), JSON.stringify(details))
+  console.warn(
+    'app:renderer-process-crashed',
+    JSON.stringify(event),
+    JSON.stringify(webContents),
+    JSON.stringify(details)
+  )
 })
 
 // 监控子进程错误
 // electron-helper、electron-helper (GPU) 主进程
 app.on('child-process-gone', (event, details) => {
-  console.warn('app:child-process-gone', event, JSON.stringify(details))
+  console.warn('app:child-process-gone', JSON.stringify(event), JSON.stringify(details))
 })

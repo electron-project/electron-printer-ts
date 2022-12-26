@@ -7,7 +7,9 @@ export function regGlobalShortcut() {
 
     if (win?.webContents.isDevToolsOpened()) {
       win?.unmaximize() // 取消窗口最大化
+      win?.setResizable(false)
     } else {
+      win?.setResizable(true)
       win?.maximize()
     }
     win?.webContents.toggleDevTools()

@@ -37,6 +37,7 @@ export async function createPrintWindow() {
 }
 
 export const getPrintWindow = () => printWindow
+
 export const closePrintWindow = () => {
   printWindow?.destroy()
   printWindow = null
