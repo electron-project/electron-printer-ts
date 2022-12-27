@@ -2,6 +2,7 @@ import { app, Menu, nativeImage, Tray } from 'electron'
 import { getPrintWindow } from '@/main/window/print'
 import { ElectronPath } from '@/main/constant/path'
 import setProgramStart from '@/main/utils/boot-start'
+import process from 'process'
 
 const initTray = () => {
   const win = getPrintWindow()
@@ -32,7 +33,11 @@ const initTray = () => {
   tray.on('right-click', () => {
     tray.popUpContextMenu(menuConfig)
   })
-
+  console.log(
+    app.getLoginItemSettings({
+      args: ['--openAsHidden'],
+    })
+  )
   const menuConfig = Menu.buildFromTemplate([
     {
       label: '自启动',
