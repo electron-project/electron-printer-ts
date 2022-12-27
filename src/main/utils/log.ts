@@ -25,7 +25,7 @@ export const initCrashReporter = () => {
   crashReporter.start({
     productName: '产品名字',
     uploadToServer: false,
-    ignoreSystemCrashHandler: false // 不忽略系统自带的奔溃处理，为 true 时表示忽略，奔溃时不会生成奔溃堆栈文件
+    ignoreSystemCrashHandler: false, // 不忽略系统自带的奔溃处理，为 true 时表示忽略，奔溃时不会生成奔溃堆栈文件
   })
 
   // 日志中添加额外信息

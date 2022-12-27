@@ -7,7 +7,7 @@ ipcMain.on('SHOW_CUT_SCREEN', async (event) => {
   try {
     let sources = await desktopCapturer.getSources({
       types: ['screen'],
-      thumbnailSize: getSize()
+      thumbnailSize: getSize(),
     })
     event.reply('GET_SCREEN_IMAGE', sources[0].thumbnail.toDataURL())
   } catch (e) {
@@ -35,14 +35,14 @@ ipcMain.on('SCREENSHOT_IMAGE', async (event, base64) => {
       'showHiddenFiles', // 显示对话框中的隐藏文件
       'createDirectory', // 允许你通过对话框的形式创建新的目录。mac
       'treatPackageAsDirectory', // 将包 (如 .app 文件夹) 视为目录而不是文件。mac
-      'dontAddToRecent' // 不要将正在保存的项目添加到最近的文档列表中。
+      'dontAddToRecent', // 不要将正在保存的项目添加到最近的文档列表中。
     ],
     filters: [
       {
         name: 'Images',
-        extensions: ['png', 'jpg', 'gif']
-      }
-    ]
+        extensions: ['png', 'jpg', 'gif'],
+      },
+    ],
   })
 
   if (path.filePath) {

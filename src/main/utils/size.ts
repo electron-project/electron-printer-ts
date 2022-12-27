@@ -6,6 +6,6 @@ export function getSize() {
 
   return {
     width: Math.floor(size.width * scaleFactor),
-    height: Math.floor(size.height * scaleFactor)
+    height: Math.floor(size.height * scaleFactor),
   }
 }

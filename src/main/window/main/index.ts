@@ -21,8 +21,8 @@ export const createMainWindow = async () => {
     height: 728,
     icon: ElectronPath.icon,
     webPreferences: {
-      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js')
-    }
+      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
+    },
   })
 
   initEvent()

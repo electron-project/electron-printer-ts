@@ -36,7 +36,7 @@ const initPrintIPC = async () => {
       body: '打印机开始打印',
       silent: false, // 是否静默通知
       icon: ElectronPath.icon,
-      timeoutType: 'default' // 通知持续时间
+      timeoutType: 'default', // 通知持续时间
 
       // toastXml: toastXmlString, // win
       // subtitle: '子标题', // mac

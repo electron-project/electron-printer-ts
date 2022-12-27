@@ -1,6 +1,5 @@
 import { URL } from 'url'
 import path from 'path'
-import { app } from 'electron'
 import { isDev } from '@/main/constant/env'
 import process from 'process'
 import { ElectronPath } from '@/main/constant/path'

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from 'electron'
+import { BrowserWindow, Menu } from 'electron'
 import { resolveHtmlPath } from '@/main/utils/path'
 import initPrintIPC from '@/main/ipc/print'
 import { checkSchemeSetup, registerLink } from '@/main/window/app/url-scheme'
