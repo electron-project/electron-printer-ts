@@ -18,8 +18,8 @@ export async function createPrintWindow() {
     webPreferences: {
       webviewTag: true, // 启用 webview 标签功能
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
 
   // 关闭菜单
