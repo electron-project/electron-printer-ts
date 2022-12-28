@@ -1,6 +1,6 @@
 {
   "name": "printer",
-  "version": "15.1.1",
+  "version": "15.1.6",
   "description": "打印机程序",
   "license": "MIT",
   "main": "./dist/main/main.js",

@@ -1,6 +1,5 @@
 import { closePrintWindow, getPrintWindow } from '@/main/window/print/index'
 import { isDev } from '@/main/constant/env'
-import { app } from 'electron'
 import ExecParams from '@/main/constant/exec'
 import process from 'process'
 
@@ -20,10 +19,6 @@ export const initPrintEvent = () => {
       // 设置关闭任务栏中的图标
       win?.setSkipTaskbar(true)
       event.preventDefault()
-    }
-
-    if (isDev) {
-      app.quit()
     }
   })
 

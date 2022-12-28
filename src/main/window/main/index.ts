@@ -1,12 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
-import AppUpdater from '@/main/utils/plugin/auto-update'
 import { resolveHtmlPath } from '@/main/utils/path'
 import { initEvent } from '@/main/window/main/event'
 import createMenu from '@/main/window/main/menu'
 import initElectronRemote from '@/main/utils/plugin/electron-remote'
 import * as process from 'process'
-import initPrint from '@/main/ipc/print'
 import '@/main/window/app/url-scheme'
 import { ElectronPath } from '@/main/constant/path'
 
@@ -29,12 +27,6 @@ export const createMainWindow = async () => {
   await initElectronRemote(mainWindow)
 
   createMenu()
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  AppUpdater().then()
-
-  initPrint()
 
   // 设置为最顶层
   // win.setAlwaysOnTop(true)

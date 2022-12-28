@@ -50,7 +50,7 @@ const initTray = () => {
     },
     {
       label: '退出',
-      click: () => app.quit(),
+      click: () => app.exit(),
     },
   ])
 }

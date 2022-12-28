@@ -210,11 +210,12 @@ linux:
   category: Development
 
 publish:
-  # 指定服务器类型，generic 通用服务器，也可以是 github 等
+  # 指定服务器类型，generic 静态资源服务器，也可以是 github 等
+  # 需要将 latest.yml 程序.exe 程序.exe.blockmap 放到服务器
   provider: github
   owner: electron-react-boilerplate
   repo: electron-react-boilerplate
-  # url: ''
+  # url: 'http://127.0.0.1/electron'
 
 # 设置 electron 源
 # https://www.electron.build/configuration/configuration.html#configuration

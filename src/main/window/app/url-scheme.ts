@@ -26,7 +26,7 @@ export function checkSchemeSetup() {
   // 启动参数超过1个才可能是通过url schema启动
   // mac下process.argv只有一个
   if (!Platform.isMac && process.argv.length > 1 && !gotTheLock) {
-    // 如果获取失败，说明已经有实例在运行了，直接退出 app.quit 会导致闪屏
+    // 如果获取失败，说明已经有实例在运行了，直接退出 app.quit 会导致闪屏 app.exit 强制退出
     app.exit(0)
   } else {
     // console.log(process.argv); 可以获取第一次没有打开过 app 的参数

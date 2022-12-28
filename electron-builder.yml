@@ -88,7 +88,7 @@ nsis:
   # installerLanguages: zh_CN #  安装器的语言（例如en_US，de_DE) 未知
   # multiLanguageInstallerBoolean # 是否创建多语言安装程序。默认为unicode选项值
   language: '2052' # 卸载后删除用户数据
-  packElevateHelper: # 是否打包 elevate 可执行文件（如果使用每台机器的安装程序或将来可以使用，则需要电子更新程序）如果忽略 perMachine 则为true
+  packElevateHelper: true # 是否打包 elevate 可执行文件（如果使用每台机器的安装程序或将来可以使用，则需要电子更新程序）如果忽略 perMachine 则为true
   runAfterFinish: true # 完成后是否运行已安装的应用程序。对于辅助安装程序，相应的复选框将被删除。
   createDesktopShortcut: always # 创建桌面图标
   createStartMenuShortcut: true # 创建开始菜单图标
@@ -99,11 +99,9 @@ nsis:
   # script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 
 publish:
-  # 指定服务器类型，generic 通用服务器，也可以是 github 等
-  provider: github
-  owner: electron-react-boilerplate
-  repo: electron-react-boilerplate
-  # url: '' # electron应用的更新地址
+  # 指定服务器类型，generic 静态资源服务器，也可以是 github 等
+  provider: generic
+  url: 'http://localhost/electron' # electron应用的更新地址
 
 # 设置 electron 源
 # https://www.electron.build/configuration/configuration.html#configuration
