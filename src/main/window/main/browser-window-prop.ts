@@ -75,6 +75,20 @@ const webPreferences: WebPreferences = {
 }
 
 const browserWindowProp: BrowserWindowConstructorOptions = {
+  //! titleBarStyle 设置为 hidden 后搭配 titleBarOverlay 设置为 true 或者自定义颜色可以像 Vscode 一样使用放大缩小控件
+  // hiddenInset hidden 设置 Mac 窗口只有左上角的最大化、关闭、缩小
+  // hidden 对于 windows 会隐藏窗口和最大化、关闭、缩小
+  // default - 分别返回 macOS 或者 Windows 的标准标题栏 
+  titleBarStyle: 'hidden',
+  
+  //  Object | Boolean (可选) 默认值为 false
+  // 在 macOS 使用无框窗口结合 win.setWindowButtonVisibility(true) 或使用 titleBarStyle 以便标准窗口控制 (在 macOS为 "traffic lights") 可见，
+  // 此属性将启用 Window Controls Overlay JavaScript APIs 和 CSS Environment Variables. 指定 true 将导致覆盖默认系统颜色。
+  // color String (可选) Windows - 控件的背景颜色 默认是系统颜色。
+  // symbolColor String (可选) Windows - 放大缩小关闭控件的颜色
+  // height Integer (可选) macOS Windows - 标题栏和 Window Controls Overlay，以像素为单位。 默认值为系统高度 (放大缩小关闭控件的高度)
+  titleBarOverlay: { color: '#eeeeee', symbolColor: '#000000', height: 5 },
+
   show: true, // 是否启动时展示
   // 当show为false并且渲染器刚刚被创建时，它是否应激活。 为了让document.visibilityState 在show: false的情况下第一次加载时正确地工作，你应该把这个设置成false. 设置为 false 将会导致ready-to-show 事件不触发。 默认值为 true。
   paintWhenInitiallyHidden: true,
@@ -119,16 +133,6 @@ const browserWindowProp: BrowserWindowConstructorOptions = {
   // inactive - 后台应一直显示为非激活状态。
   // 鼠标点击别的地方时，窗口是否有内容
   visualEffectState: 'followWindow',
-  // hiddenInset hidden 设置 Mac 窗口只有左上角的最大化、关闭、缩小
-  // hidden 对于 windows 会隐藏窗口和最大化、关闭、缩小，需要搭配 titleBarOverlay 的 color 使最大化、关闭、缩小功能展示
-  titleBarStyle: 'hidden', // default - 分别返回 macOS 或者 Windows 的标准标题栏  hiddenInset - 隐藏标题栏, 显示小的控制按钮在窗口边缘 ,hidden - 在一个隐藏的标题栏和一个全尺寸大小的内容窗口中取得结果。 在 macOS 内, 窗口将一直拥有位于左上的标准窗口控制器 (“traffic lights”)。 在 Windows上，当与 titleBarOverlay: true 合并时，它将激活窗口控件叠加(详情请参阅 titleBarOverlay)，否则将不会显示窗口控件。
-  //  Object | Boolean (可选) 默认值为 false
-  // 在 macOS 使用无框窗口结合 win.setWindowButtonVisibility(true) 或使用 titleBarStyle 以便标准窗口控制 (在 macOS为 "traffic lights") 可见，
-  // 此属性将启用 Window Controls Overlay JavaScript APIs 和 CSS Environment Variables. 指定 true 将导致覆盖默认系统颜色。
-  // color String (可选) Windows - 放大缩小关闭控件的颜色背景颜色 默认是系统颜色。
-  // symbolColor String (可选) Windows - 放大缩小关闭控件的颜色
-  // height Integer (可选) macOS Windows - 标题栏和 Window Controls Overlay，以像素为单位。 默认值为系统高度 (放大缩小关闭控件的高度)
-  titleBarOverlay: { color: '#eeeeee', symbolColor: '#000000', height: 5 },
   thickFrame: true, // 对 Windows 上的无框窗口使用WS_THICKFRAME 样式，会增加标准窗口框架。 设置为 false 时将移除窗口的阴影和动画.
   darkTheme: false, //  强制窗口使用深色主题，只在部分GTK+3桌面环境下有效。 默认值为 false.
 
