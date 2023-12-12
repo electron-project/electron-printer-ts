@@ -18,6 +18,9 @@ export const createMainWindow = async () => {
     width: 1024,
     height: 728,
     icon: ElectronPath.icon,
+    //! titleBarStyle 设置为 hidden 后搭配 titleBarOverlay 设置为 true 或者自定义颜色可以像 Vscode 一样使用放大缩小控件
+    titleBarStyle: 'hidden',
+    titleBarOverlay: { color: '#eeeeee', symbolColor: '#000000', height: 35 },
     webPreferences: {
       preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(process.cwd(), '.erb/dll/preload.js'),
     },
